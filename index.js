@@ -4,11 +4,11 @@ g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 //See also: http://www.displayhack.org/2011/superpacking-js-demos/
 //gluPerspective and glFrustum: https://www.opengl.org/wiki/GluPerspective_code
-function gP(fovy, ar,zn, zf, x,y) {
+function gP(fovy, ar,zn, zf, x,y){
 	return y=zn*Math.tan(fovy*Math.PI/360),x=y*ar,gF(-x,x,-y,y,zn,zf)
 }
 
-function gF(l,r,b,t,zn,zf,t1,t2,t3,t4) {
+function gF(l,r,b,t,zn,zf,t1,t2,t3,t4){
 	return t1=2*zn,t2=r-l,t3=t-b,t4=zf-zn,[t1/t2,0,0,0,0,t1/t3,0,0,(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,0,0,(-t1*zf)/t4,0]
 }
 
@@ -32,7 +32,6 @@ function X(a,b,c,i,j,k){
 }
 
 function $(el,s){
-
 	s=g.createShader(/frag/.test(el.type)?g.FRAGMENT_SHADER:g.VERTEX_SHADER)
 	g.shaderSource(s,el.textContent)
 	g.compileShader(s)
