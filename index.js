@@ -12,8 +12,8 @@ function gF(l,r,b,t,zn,zf,t1,t2,t3,t4) {
 	return t1=2*zn,t2=r-l,t3=t-b,t4=zf-zn,[t1/t2,0,0,0,0,t1/t3,0,0,(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,0,0,(-t1*zf)/t4,0]
 }
 
-function I(){
-	return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+function I(x){
+	return ((x=1e4+"")+x+x+1).split('')
 }
 
 function T(x,y,z,r){
