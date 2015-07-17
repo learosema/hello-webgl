@@ -32,6 +32,7 @@ function X(a,b,c,i,j,k){
 }
 
 function $(el,s){
+
 	s=g.createShader(/frag/.test(el.type)?g.FRAGMENT_SHADER:g.VERTEX_SHADER)
 	g.shaderSource(s,el.textContent)
 	g.compileShader(s)
@@ -53,12 +54,17 @@ g.linkProgram(p)
 g.useProgram(p)
 vp=g.getAttribLocation(p, "aVertexPosition")
 g.enableVertexAttribArray(vp)
+vc=g.getAttribLocation(p, "aVertexColor")
+g.enableVertexAttribArray(vc)
 b=B([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
+c=B("1111100101010011".split(""))
 g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT)
 pM = gP(45,4/3,.1,100)
 mVM = T(0,0,-6)
 g.bindBuffer(g.ARRAY_BUFFER, b)
 g.vertexAttribPointer(vp,3,g.FLOAT,false,0,0)
+g.bindBuffer(g.ARRAY_BUFFER, c)
+g.vertexAttribPointer(vc, 4, g.FLOAT,false,0,0)
 g.uniformMatrix4fv(uPM=g.getUniformLocation(p,"uPMatrix"), false, new Float32Array(pM))
 g.uniformMatrix4fv(uMVM=g.getUniformLocation(p,"uMVMatrix"), false, new Float32Array(mVM))
 g.drawArrays(g.TRIANGLE_STRIP,0,4)
