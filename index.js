@@ -3,24 +3,29 @@ g.clearColor(0,0,0,1)
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 //See also: http://www.displayhack.org/2011/superpacking-js-demos/
-//gluPerspective and glFrustum: https://www.opengl.org/wiki/GluPerspective_code
+
+//gluPerspective
 function gP(fovy, ar,zn, zf, x,y){
 	return y=zn*Math.tan(fovy*Math.PI/360),x=y*ar,gF(-x,x,-y,y,zn,zf)
 }
-
+//glFrustum
 function gF(l,r,b,t,zn,zf,t1,t2,t3,t4){
 	return t1=2*zn,t2=r-l,t3=t-b,t4=zf-zn,[t1/t2,0,0,0,0,t1/t3,0,0,(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,0,0,(-t1*zf)/t4,0]
 }
-
+//glOrtho
+function gO(l,r,b,t,zn,zf,tx,ty,tz){
+    return tx=-(r+l)/(r-l),ty=-(t+b)/(t-b),tz=-(zf+zn)/(zf-zn),[2/(r-l),0,0,0,0,2/(t-b),0,0,0,0,-2/(zf-zn),0,tx,ty,tz,1]
+}
+//Identity Matrix
 function I(x){
 	return ((x=1e4+"")+x+x+1).split('')
 }
-
+//Transformation Matrix
 function T(x,y,z,r){
 	return r=I(),r.splice(12,3,x,y,z),r;
 }
-
-function X(a,b,c,i,j,k){
+//Matrix multiplication
+function MX(a,b,c,i,j,k){
 	c=[]
 	for(i=4;i--;)
 		for(k=4;k--;)
@@ -29,6 +34,10 @@ function X(a,b,c,i,j,k){
 				c[i+k*4]+=a[i+j*4]*b[j+k*4]
 			}
 	return c
+}
+//Vector cross product
+function VX(a,b){
+	return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
 }
 
 function $(el,s){
