@@ -39,6 +39,19 @@ function MX(a,b,c,i,j,k){
 function VX(a,b){
 	return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
 }
+//Vector length
+function VL(v){
+	return Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])
+}
+//Unit vector
+function V1(v){
+	return l=VL(v),[v[0]/l,v[1]/l,v[2]/l]
+}
+
+//gluLookAt
+function gLA(ex,y,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
+	return c=[cx,cy,cz],u=[ux,uy,uz],z=V1([ex-cx,ey-cy,ez-cz]),x=V1(VX(u,z)),y=V1(VX(z,x)),[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,0,0,0,1]
+}
 
 function $(el,s){
 	s=g.createShader(/frag/.test(el.type)?g.FRAGMENT_SHADER:g.VERTEX_SHADER)
