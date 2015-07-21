@@ -2,6 +2,7 @@ g=a.getContext('webgl')
 g.clearColor(0,0,0,1)
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
+//-------------------------------------------- matrix and vector operations, plus commonly known gl perspective utility functions
 //Identity Matrix
 function mI(x){
 	return ((x=1e4+"")+x+x+1).split('')
@@ -86,10 +87,12 @@ function $buffer(v,b){
 	return b
 }
 
+//get a reference to an Attribute
 function $attrib(p,l,r){
 	return r=g.getAttribLocation(p, l),g.enableVertexAttribArray(r),r
 }
 
+//bind an attribute to a buffer
 function $bind(attrib, buffer, size, type, normalized) {
 	type = type||g.FLOAT
 	normalized = normalized||false
