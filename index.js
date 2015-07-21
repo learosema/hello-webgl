@@ -2,7 +2,6 @@ g=a.getContext('webgl')
 g.clearColor(0,0,0,1)
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
-//-------------------------------------------- matrix and vector operations:
 //Identity Matrix
 function mI(x){
 	return ((x=1e4+"")+x+x+1).split('')
@@ -38,8 +37,6 @@ function vL(v){
 function v1(v){
 	return l=vL(v),[v[0]/l,v[1]/l,v[2]/l]
 }
-
-//------------------------------------------- Commonly known GL utility functions:
 
 function ortho(l,r,b,t,zn,zf,tx,ty,tz){
     return tx=-(r+l)/(r-l),ty=-(t+b)/(t-b),tz=-(zf+zn)/(zf-zn),[2/(r-l),0,0,0,0,2/(t-b),0,0,0,0,-2/(zf-zn),0,tx,ty,tz,1]
@@ -89,11 +86,18 @@ function $buffer(v,b){
 	return b
 }
 
-//create Vertex Array Attribute
 function $attrib(p,l,r){
 	return r=g.getAttribLocation(p, l),g.enableVertexAttribArray(r),r
 }
 
+function $bind(attrib, buffer, size, type, normalized) {
+	type = type||g.FLOAT
+	normalized = normalized||false
+	g.bindBuffer(g.ARRAY_BUFFER, buffer)
+	g.vertexAttribPointer(attrib, size, type, normalized, 0, 0)
+}
+
+//------------------------------------------------------------ main:
 p                    = $program([vertexShader, fragmentShader])
 positionBuffer       = $buffer([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
 colorBuffer          = $buffer("1111100101010011".split(""))
@@ -101,15 +105,22 @@ vertexPositionAttrib = $attrib(p, "aVertexPosition")
 vertexColorAttrib    = $attrib(p, "aVertexColor")
 
 ~function drawScene() {
+	// init perspective matrix and modelViewMatrix
 	pM = perspective(45, 4/3, 0.1, 100)
 	mVM = mT(0, 0, -6)
+	
+	// clear screen
 	g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT)
-	g.bindBuffer(g.ARRAY_BUFFER, b)
-	g.vertexAttribPointer(vertexPositionAttrib, 3, g.FLOAT, false,0,0)
-	g.bindBuffer(g.ARRAY_BUFFER, c)
-	g.vertexAttribPointer(vertexColorAttrib, 4, g.FLOAT, false,0,0)
+
+	// bind attributes to buffers
+	$bind(vertexPositionAttrib, positionBuffer, 3)
+	$bind(vertexColorAttrib, colorBuffer, 4)
+	
+	// set uniforms
 	g.uniformMatrix4fv(uPM=g.getUniformLocation(p,"uPMatrix"), false, new Float32Array(pM))
 	g.uniformMatrix4fv(uMVM=g.getUniformLocation(p,"uMVMatrix"), false, new Float32Array(mVM))
+
+	// draw
 	g.drawArrays(g.TRIANGLE_STRIP,0,4)
 }()
 
