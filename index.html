@@ -1,19 +1,19 @@
 <body style=background-color:#000;overflow:hidden;margin:0>
 <canvas id=a style=display:block;width:100%;height:100%></canvas>
-<script id=fs type=x-shader/x-fragment>
+<script id=fragmentShader type=x-shader/x-fragment>
 varying lowp vec4 vColor;
     	
-void main(void) {
+void main() {
 	gl_FragColor = vColor;
 }
 </script>
-<script id=vs type=x-shader/x-vertex>
+<script id=vertexShader type=x-shader/x-vertex>
 attribute vec3 aVertexPosition;
 attribute vec4 aVertexColor;
 uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
 varying lowp vec4 vColor;
-void main(void) {
+void main() {
 	gl_Position=uPMatrix * uMVMatrix * vec4(aVertexPosition,1.0);
 	vColor = aVertexColor;
 }
