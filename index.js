@@ -1,7 +1,3 @@
-g=a.getContext('webgl')
-g.clearColor(0,0,0,1)
-g.enable(g.DEPTH_TEST)
-g.depthFunc(g.LEQUAL)
 //-------------------------------------------- matrix and vector operations, plus commonly known gl perspective utility functions
 //Identity Matrix
 function mI(x){
@@ -55,8 +51,9 @@ function lookAt(ex,y,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
 	return c=[cx,cy,cz],u=[ux,uy,uz],z=v1([ex-cx,ey-cy,ez-cz]),x=v1(vX(u,z)),y=v1(vX(z,x)),[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,0,0,0,1]
 }
 
-//-------------------------------------------- helper functions
+//-------------------------------------------- webgl helper functions
 // create shader
+
 function $shader(el,s){
 	s=g.createShader(/frag/.test(el.type)?g.FRAGMENT_SHADER:g.VERTEX_SHADER)
 	g.shaderSource(s,el.textContent)
@@ -68,13 +65,15 @@ function $shader(el,s){
 }
 
 // create program
-function $program(s,p){
+function $program(g, s, p){
 	p=g.createProgram()
 	s.map(function(s){
 		g.attachShader(p,$shader(s));
 	});
 	g.linkProgram(p)
 	g.useProgram(p)
+	// pollute the global namespace a bit ;)
+	window.g=g
 	window.shaders = s
 	return p
 }
@@ -100,8 +99,18 @@ function $bind(attrib, buffer, size, type, normalized) {
 	g.vertexAttribPointer(attrib, size, type, normalized, 0, 0)
 }
 
+function $uniform(p, name, data, u) {
+	u=g.getUniformLocation(p,name)
+	if (data) g.uniformMatrix4fv(u, false, new Float32Array(data))
+	return u
+}
+
 //------------------------------------------------------------ main:
-p                    = $program([vertexShader, fragmentShader])
+g=a.getContext('webgl')
+g.enable(g.DEPTH_TEST)
+g.depthFunc(g.LEQUAL)
+
+p                    = $program(g, [vertexShader, fragmentShader])
 positionBuffer       = $buffer([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
 colorBuffer          = $buffer("1111100101010011".split(""))
 vertexPositionAttrib = $attrib(p, "aVertexPosition")
@@ -113,6 +122,7 @@ vertexColorAttrib    = $attrib(p, "aVertexColor")
 	mVM = mT(0, 0, -6)
 	
 	// clear screen
+	g.clearColor(0, 0, 0, 1)
 	g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT)
 
 	// bind attributes to buffers
@@ -120,11 +130,9 @@ vertexColorAttrib    = $attrib(p, "aVertexColor")
 	$bind(vertexColorAttrib, colorBuffer, 4)
 	
 	// set uniforms
-	g.uniformMatrix4fv(uPM=g.getUniformLocation(p,"uPMatrix"), false, new Float32Array(pM))
-	g.uniformMatrix4fv(uMVM=g.getUniformLocation(p,"uMVMatrix"), false, new Float32Array(mVM))
+	uPMatrix  = $uniform(p, "uPMatrix", pM)
+	uMVMatrix = $uniform(p, "uMVMatrix", mVM)
 
 	// draw
 	g.drawArrays(g.TRIANGLE_STRIP,0,4)
 }()
-
-
