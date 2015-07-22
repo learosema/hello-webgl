@@ -47,7 +47,7 @@ function perspective(fovy, ar,zn, zf, x,y){
 	return y=zn*Math.tan(fovy*Math.PI/360),x=y*ar,frustum(-x,x,-y,y,zn,zf)
 }
 
-function lookAt(ex,y,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
+function lookAt(ex,ey,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
 	return c=[cx,cy,cz],u=[ux,uy,uz],z=v1([ex-cx,ey-cy,ez-cz]),x=v1(vX(u,z)),y=v1(vX(z,x)),[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,0,0,0,1]
 }
 
