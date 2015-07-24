@@ -59,13 +59,13 @@ function $shader(el,s){
 	g.shaderSource(s,el.textContent)
 	g.compileShader(s)
 	if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
-		throw Error(g.getShaderInfoLog(s))
+		throw Error(el.id+": "+g.getShaderInfoLog(s))
 	}
 	return s
 }
 
 // create program
-function $program(g, s, p){
+function $prog(g, s, p){
 	p=g.createProgram()
 	s.map(function(s){
 		g.attachShader(p,$shader(s));
@@ -75,11 +75,12 @@ function $program(g, s, p){
 	// pollute the global namespace a bit ;)
 	window.g=g
 	window.shaders = s
+	window.p=p
 	return p
 }
 
 // create buffer
-function $buffer(v,b){
+function $buf(v,b){
 	b=g.createBuffer()
 	g.bindBuffer(g.ARRAY_BUFFER, b)
 	g.bufferData(g.ARRAY_BUFFER, new Float32Array(v), g.STATIC_DRAW)
@@ -87,7 +88,7 @@ function $buffer(v,b){
 }
 
 //get a reference to an Attribute
-function $attrib(p,l,r){
+function $attr(l,r){
 	return r=g.getAttribLocation(p, l),g.enableVertexAttribArray(r),r
 }
 
@@ -99,40 +100,58 @@ function $bind(attrib, buffer, size, type, normalized) {
 	g.vertexAttribPointer(attrib, size, type, normalized, 0, 0)
 }
 
-function $uniform(p, name, data, u) {
-	u=g.getUniformLocation(p,name)
-	if (data) g.uniformMatrix4fv(u, false, new Float32Array(data))
-	return u
+function $uniM(name, data, l) {
+	l=g.getUniformLocation(p,name)
+	g["uniformMatrix"+Math.sqrt(data.length)+"fv"](l, false, new Float32Array(data))
+	return l
 }
+
+function $uniV(name, data, l) {
+	l=g.getUniformLocation(p,name)
+	g["uniform"+data.length+"fv"](l, false, new Float32Array(data))
+	return l
+}
+
+function $uni(name, data,l){
+	l=g.getUniformLocation(p,name)
+	if(typeof(data)=="number"){
+		g.uniform1f(l,data)
+	}
+	return l
+}
+
+
 
 //------------------------------------------------------------ main:
 g=a.getContext('webgl')
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 
-p                    = $program(g, [vertexShader, fragmentShader])
-positionBuffer       = $buffer([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
-colorBuffer          = $buffer("1111100101010011".split(""))
-vertexPositionAttrib = $attrib(p, "aVertexPosition")
-vertexColorAttrib    = $attrib(p, "aVertexColor")
+p                    = $prog(g, [vertexShader, fragmentShader])
+positionBuffer       = $buf([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
+colorBuffer          = $buf("1111100101010011".split(""))
+aVertexPosition      = $attr("aVertexPosition")
+aVertexColor         = $attr("aVertexColor")
 
-~function drawScene() {
-	// init perspective matrix and modelViewMatrix
+~function drawScene(time) {
+	time=time*1e-3
 	pM = perspective(45, 4/3, 0.1, 100)
 	mVM = mT(0, 0, -6)
 	
 	// clear screen
-	g.clearColor(0, 0, 0, 1)
+	g.clearColor(1/5, 1/5, 1/5, 1)
 	g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT)
 
 	// bind attributes to buffers
-	$bind(vertexPositionAttrib, positionBuffer, 3)
-	$bind(vertexColorAttrib, colorBuffer, 4)
+	$bind(aVertexPosition, positionBuffer, 3)
+	$bind(aVertexColor, colorBuffer, 4)
 	
 	// set uniforms
-	uPMatrix  = $uniform(p, "uPMatrix", pM)
-	uMVMatrix = $uniform(p, "uMVMatrix", mVM)
+	uPMatrix  = $uniM("uPMatrix", pM)
+	uMVMatrix = $uniM("uMVMatrix", mVM)
+	uTime     = $uni("time", time)
 
 	// draw
 	g.drawArrays(g.TRIANGLE_STRIP,0,4)
-}()
+	requestAnimationFrame(drawScene)
+}(0)
