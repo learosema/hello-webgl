@@ -9,11 +9,9 @@ posBuf = $buf([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
 pos = $attr("pos")
 
 
-~function drawScene(time) {
+~function scene(time) {
 	time=time*1e-3
-	pM = perspective(45, 4/3, 0.1, 100)
-	mVM = mT(0, 0, -6)
-	
+
 	// clear screen
 	g.clearColor(1/5, 1/5, 1/5, 1)
 	g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT)
@@ -27,5 +25,5 @@ pos = $attr("pos")
 
 	// draw
 	g.drawArrays(g.TRIANGLE_STRIP,0,4)
-	requestAnimationFrame(drawScene)
+	requestAnimationFrame(scene)
 }(0)
