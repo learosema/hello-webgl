@@ -10,6 +10,7 @@ uniform vec2 mouse;
 void main() {
 	vec2 uv = gl_FragCoord.xy / resolution;
 	float color = 0.0;
+	// borrowed from mrdoob :)
 	color += sin( uv.x * cos( time / 3.0 ) * 60.0 ) + cos( uv.y * cos( time / 2.80 ) * 10.0 );
 	color += sin( uv.y * sin( time / 2.0 ) * 40.0 ) + cos( uv.x * sin( time / 1.70 ) * 40.0 );
 	color += sin( uv.x * sin( time / 1.0 ) * 10.0 ) + sin( uv.y * sin( time / 3.50 ) * 80.0 );
@@ -18,16 +19,10 @@ void main() {
 }
 </script>
 <script id=vertexShader type=x-shader/x-vertex>
-//precision mediump float;
 attribute vec3 aVertexPosition;
-//attribute vec4 aVertexColor;
-//uniform mat4 uMVMatrix;
-//uniform mat4 uPMatrix;
-//varying lowp vec4 vColor;
-//uniform float time;
+
 void main() {
 	gl_Position=vec4(aVertexPosition, 1.0);
-	// vColor = aVertexColor;
 }
 </script>
 <script src=index.js></script>

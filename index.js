@@ -147,8 +147,6 @@ aVertexPosition      = $attr("aVertexPosition")
 	$bind(aVertexPosition, positionBuffer, 3)
 	
 	// set uniforms
-	// uPMatrix  = $uniM("uPMatrix", pM)
-	// uMVMatrix = $uniM("uMVMatrix", mVM)
 	$uni("time", time)
 	$uniV("resolution", [w,h])
 
