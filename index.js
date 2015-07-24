@@ -108,7 +108,7 @@ function $uniM(name, data, l) {
 
 function $uniV(name, data, l) {
 	l=g.getUniformLocation(p,name)
-	g["uniform"+data.length+"fv"](l, false, new Float32Array(data))
+	g["uniform"+data.length+"fv"](l, new Float32Array(data))
 	return l
 }
 
@@ -123,15 +123,16 @@ function $uni(name, data,l){
 
 
 //------------------------------------------------------------ main:
+w=a.width=innerWidth
+h=a.height=innerHeight
 g=a.getContext('webgl')
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 
 p                    = $prog(g, [vertexShader, fragmentShader])
 positionBuffer       = $buf([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
-colorBuffer          = $buf("1111100101010011".split(""))
 aVertexPosition      = $attr("aVertexPosition")
-aVertexColor         = $attr("aVertexColor")
+
 
 ~function drawScene(time) {
 	time=time*1e-3
@@ -144,12 +145,12 @@ aVertexColor         = $attr("aVertexColor")
 
 	// bind attributes to buffers
 	$bind(aVertexPosition, positionBuffer, 3)
-	$bind(aVertexColor, colorBuffer, 4)
 	
 	// set uniforms
-	uPMatrix  = $uniM("uPMatrix", pM)
-	uMVMatrix = $uniM("uMVMatrix", mVM)
-	uTime     = $uni("time", time)
+	// uPMatrix  = $uniM("uPMatrix", pM)
+	// uMVMatrix = $uniM("uMVMatrix", mVM)
+	$uni("time", time)
+	$uniV("resolution", [w,h])
 
 	// draw
 	g.drawArrays(g.TRIANGLE_STRIP,0,4)

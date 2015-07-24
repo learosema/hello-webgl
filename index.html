@@ -1,24 +1,33 @@
 <body style=background-color:#000;overflow:hidden;margin:0>
 <canvas id=a style=display:block;width:100%;height:100%></canvas>
 <script id=fragmentShader type=x-shader/x-fragment>
-varying lowp vec4 vColor;
-uniform lowp float time;
-uniform lowp vec2 mouse;
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+uniform vec2 mouse;
 
 void main() {
-	gl_FragColor = vec4(vec3(cos(vColor.r + time / 2.0), sin(vColor.g + time * 5.0), sin( vColor.b + time * 4.0 ) * 0.75), 1.0 );
+	vec2 uv = gl_FragCoord.xy / resolution;
+	float color = 0.0;
+	color += sin( uv.x * cos( time / 3.0 ) * 60.0 ) + cos( uv.y * cos( time / 2.80 ) * 10.0 );
+	color += sin( uv.y * sin( time / 2.0 ) * 40.0 ) + cos( uv.x * sin( time / 1.70 ) * 40.0 );
+	color += sin( uv.x * sin( time / 1.0 ) * 10.0 ) + sin( uv.y * sin( time / 3.50 ) * 80.0 );
+	color *= sin( time / 10.0 ) * 0.5;
+  	gl_FragColor = vec4( vec3( color * 0.5, sin( color + time / 2.5 ) * 0.75, color ), 1.0 );
 }
 </script>
 <script id=vertexShader type=x-shader/x-vertex>
+//precision mediump float;
 attribute vec3 aVertexPosition;
-attribute vec4 aVertexColor;
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-varying lowp vec4 vColor;
-uniform lowp float time;
+//attribute vec4 aVertexColor;
+//uniform mat4 uMVMatrix;
+//uniform mat4 uPMatrix;
+//varying lowp vec4 vColor;
+//uniform float time;
 void main() {
-	gl_Position=uPMatrix * uMVMatrix * vec4(vec3(aVertexPosition.x+sin(time*2.0),aVertexPosition.y+cos(time*2.0),aVertexPosition.z),1.0);
-	vColor = aVertexColor;
+	gl_Position=vec4(aVertexPosition, 1.0);
+	// vColor = aVertexColor;
 }
 </script>
 <script src=index.js></script>
