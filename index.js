@@ -4,9 +4,9 @@ g=a.getContext('webgl')
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 
-p                    = $prog(g, [vertexShader, fragmentShader])
-positionBuffer       = $buf([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
-aVertexPosition      = $attr("aVertexPosition")
+$prog(g, [vertexShader, fragmentShader])
+posBuf = $buf([1,1,0,-1,1,0,1,-1,0,-1,-1,0])
+pos = $attr("pos")
 
 
 ~function drawScene(time) {
@@ -19,7 +19,7 @@ aVertexPosition      = $attr("aVertexPosition")
 	g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT)
 
 	// bind attributes to buffers
-	$bind(aVertexPosition, positionBuffer, 3)
+	$bind(pos, posBuf, 3)
 	
 	// set uniforms
 	$uni("time", time)
