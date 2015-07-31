@@ -1,0 +1,32 @@
+<body style=background-color:#000;overflow:hidden;margin:0>
+<canvas id=a style=display:block;width:100%;height:100%></canvas>
+<script id=fragmentShader type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+uniform vec2 mouse;
+
+void main() {
+	vec2 uv = gl_FragCoord.xy / resolution;
+	uv.x=(uv.x-0.5)+cos(time/2.0)*1.2;
+	uv.y=(uv.y-0.5)+sin(time/2.0)*0.8;
+	uv.x*=sin((uv.x+time*0.9)/10.0)*resolution.x/200.0;
+	uv.y*=cos((uv.y+time)/3.0)*resolution.y/200.0;
+	float r = cos(time)-cos(uv.x*uv.y*cos(sin(time)*uv.x)*1.0)*cos(uv.x*uv.y*sin(sin(time)*uv.x)*1.0);
+	float g = sin(uv.x*uv.y*cos(cos(time)*uv.x)*1.0)*cos(uv.x*uv.y*sin(cos(time)*uv.x)*1.0);
+	float b = sin(time)-sin(uv.x*uv.y*sin(cos(time)*uv.x)*1.0)*cos(uv.x*uv.y*cos(sin(time)*uv.x)*1.0);
+	//if (uv.x>0.49&&uv.x<0.51||uv.y>0.49&&uv.y<0.51) b=0.0;
+  	gl_FragColor = vec4( vec3( r, g, b), 1.0 );
+}
+</script>
+<script id=vertexShader type=x-shader/x-vertex>
+attribute vec3 pos;
+
+void main() {
+	gl_Position=vec4(pos, 1.0);
+}
+</script>
+<script src=glutz.js></script>
+<script src=app1.js></script>
+

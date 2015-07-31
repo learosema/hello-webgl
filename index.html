@@ -1,30 +1,6 @@
-<body style=background-color:#000;overflow:hidden;margin:0>
-<canvas id=a style=display:block;width:100%;height:100%></canvas>
-<script id=fragmentShader type=x-shader/x-fragment>
-precision mediump float;
+<h1>First webgl helloworld projects :)</h1>
 
-uniform float time;
-uniform vec2 resolution;
-uniform vec2 mouse;
-
-void main() {
-	vec2 uv = gl_FragCoord.xy / resolution;
-	float color = 0.0;
-	// borrowed from mrdoob :)
-	color += sin( uv.x * cos( time / 3.0 ) * 65.0 ) + cos( uv.y * cos( time / 2.80 ) * 10.0 );
-	color += sin( uv.y * sin( time / 10.0 ) * 40.0 ) + cos( uv.x * sin( time / 1.70 ) * 40.0 );
-	color += sin( uv.x * sin( time / 1.0 ) * 10.0 ) + sin( uv.y * sin( time / 3.50 ) * 80.0 );
-	color *= sin( time / 10.0 ) * 0.5;
-  	gl_FragColor = vec4( vec3( color * 0.7, sin( color + time / 2.5 ) * 0.9, color), 1.0 );
-}
-</script>
-<script id=vertexShader type=x-shader/x-vertex>
-attribute vec3 pos;
-
-void main() {
-	gl_Position=vec4(pos, 1.0);
-}
-</script>
-<script src=glutz.js></script>
-<script src=index.js></script>
-
+<ul>
+<li><a href="app1.html">Helloworld #1</a></li>
+<li><a href="app2.html">Helloworld #2</a></li>
+</ul>
