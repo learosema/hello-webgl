@@ -1,0 +1,18 @@
+body {
+	font-family: monospace;
+	font-size: 2em;
+	color: #7f9;
+	background-color: #333
+}
+
+h1, h2, h3, h4, h5 {
+	color: #fff;
+}
+
+a {
+	color: #7bf;
+}
+
+a:active, a:hover, a:focus {
+	color: #9ef;
+}
