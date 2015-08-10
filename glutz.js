@@ -2,13 +2,15 @@
 // License: WTFPL v2.0
 //
 // Provides some simple helper functions for webgl.
-// Includes vector/matrix operations and perspective utility functions
+//
+// Includes sugar around the WebGL API, vector/matrix operations
+// and perspective utility functions.
 //
 // Notice:
-// 1. Esoteric coding style. The code is bad and ugly by design :D
-// 2. Fun project, not intended to be used in production.
+// 1. Fun project with esoteric coding style. Mean ugly dirty code by design :D
+// 2. Excerpts of it might be useful for #js1k/#js13kgames projects.
 // 3. Work in progress, far from complete.
-//
+
 // Square Root
 sR=Math.sqrt
 
