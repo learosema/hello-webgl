@@ -88,9 +88,9 @@ function v1(v){
 function ortho(l,r,b,t,zn,zf,tx,ty,tz){
 	return tx=-(r+l)/(r-l),
 	       ty=-(t+b)/(t-b),
-		   tz=-(zf+zn)/(zf-zn),
-		   [2/(r-l),0,0,
-		    0,0,2/(t-b),0,
+	       tz=-(zf+zn)/(zf-zn),
+	       [2/(r-l),0,0,
+	        0,0,2/(t-b),0,
 	        0,0,0,-2/(zf-zn),
 	        0,tx,ty,tz,1]
 }
@@ -117,9 +117,9 @@ function lookAt(ex,ey,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
 	       z=v1([ex-cx,ey-cy,ez-cz]),
 	       x=v1(vX(u,z)),y=v1(vX(z,x)),
 	       [x[0],y[0],z[0],0,
-		    x[1],y[1],z[1],0,
-			x[2],y[2],z[2],0,
-			0,0,0,1]
+	        x[1],y[1],z[1],0,
+	        x[2],y[2],z[2],0,
+	        0,0,0,1]
 }
 
 // create shader
