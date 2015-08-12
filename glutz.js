@@ -3,20 +3,27 @@
 //
 // Provides some simple helper functions for webgl.
 //
-// Includes sugar around the WebGL API, vector/matrix operations
-// and perspective utility functions.
+// Includes sugar around the WebGL API, 
+// vector/matrix operations and perspective utility
+// utility functions.
 //
 // Notice:
-// 1. Fun project with esoteric coding style. Mean ugly dirty code by design :D
-// 2. Excerpts of it might be useful for #js1k/#js13kgames projects.
+// 1. Fun project with esoteric coding style. 
+//    Mean ugly dirty code by design :D
+// 2. Excerpts out of it might be useful.
+//    In #js1k/#js13kgames projects, for example.
 // 3. Work in progress, far from complete.
 
-// Square Root
-sR=Math.sqrt
+// Laziness
+with(Math)
+	sR=sqrt,sin=sin,cos=cos,tan=tan,atan=atan,atan2=atan2;
 
 // Identity Matrix
-function mI(x){
-	return ((x=1e4+"")+x+x+1).split('')
+function mI(){
+	return[1,0,0,0,
+	       0,1,0,0,
+		   0,0,1,0,
+		   0,0,0,1]
 }
 
 // Transformation Matrix
@@ -35,9 +42,36 @@ function mX(a,b,c,i,j,k,l){c=[]
 	return c
 }
 
+// Matrix for rotation around x-axis
+function mRx(a){
+	return[1,0,0,0,
+	       0,cos(a),sin(a),0,
+	       0,-sin(a),cos(a),0,
+	       0,0,0,1]
+}
+
+// Matrix for rotation around y-axis
+function mRy(a){
+	return[cos(a),0,-sin(a),0,
+	       0,1,0,0,0,
+	       sin(a),0,cos(a),0,
+	       0,0,0,1]
+}
+
+// Matrix for rotation around z-axis
+function mRz(a){
+	return[cos(a),sin(a),0,0,
+	      -sin(a),cos(a),0,0,
+	       0,0,1,0,
+		   0,0,0,1]
+}
+
+
 // Vector cross product
 function vX(a,b){
-	return[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
+	return[a[1]*b[2]-a[2]*b[1],
+	       a[2]*b[0]-a[0]*b[2],
+		   a[0]*b[1]-a[1]*b[0]]
 }
 
 // Vector length
@@ -52,26 +86,40 @@ function v1(v){
 
 // glOrtho(left, right, bottom, top, zNear, zFar)
 function ortho(l,r,b,t,zn,zf,tx,ty,tz){
-	return tx=-(r+l)/(r-l),ty=-(t+b)/(t-b),tz=-(zf+zn)/(zf-zn),
-		[2/(r-l),0,0,0,0,2/(t-b),0,0,0,0,-2/(zf-zn),0,tx,ty,tz,1]
+	return tx=-(r+l)/(r-l),
+	       ty=-(t+b)/(t-b),
+		   tz=-(zf+zn)/(zf-zn),
+		   [2/(r-l),0,0,
+		    0,0,2/(t-b),0,
+			0,0,0,-2/(zf-zn),
+			0,tx,ty,tz,1]
 }
 
 // glFrustum(left, right, bottom, top, zNear, zFar)
 function frustum(l,r,b,t,zn,zf,t1,t2,t3,t4){
 	return t1=2*zn,t2=r-l,t3=t-b,t4=zf-zn,
-		[t1/t2,0,0,0,0,t1/t3,0,0,(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,0,0,(-t1*zf)/t4,0]
+	       [t1/t2,0,0,0,
+		    0,t1/t3,0,0,
+			(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,
+			0,0,(-t1*zf)/t4,0]
 }
 
 // gluPerspective(fieldOfView, aspectRatio, zNear, zFar)
 function perspective(fovy,ar,zn,zf,x,y){
-	return y=zn*Math.tan(fovy*Math.PI/360),x=y*ar,frustum(-x,x,-y,y,zn,zf)
+	return y=zn*Math.tan(fovy*Math.PI/360),
+	       x=y*ar,frustum(-x,x,-y,y,zn,zf)
 }
 
 // gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ)
 function lookAt(ex,ey,ez,cx,cy,cz,ux,uy,uz,c,u,x,y,z){
-	return c=[cx,cy,cz],u=[ux,uy,uz],z=v1([ex-cx,ey-cy,ez-cz]),
-		x=v1(vX(u,z)),y=v1(vX(z,x)),
-		[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,0,0,0,1]
+	return c=[cx,cy,cz],
+	       u=[ux,uy,uz],
+	       z=v1([ex-cx,ey-cy,ez-cz]),
+	       x=v1(vX(u,z)),y=v1(vX(z,x)),
+	       [x[0],y[0],z[0],0,
+		    x[1],y[1],z[1],0,
+			x[2],y[2],z[2],0,
+			0,0,0,1]
 }
 
 // create shader
