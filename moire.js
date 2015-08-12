@@ -1,6 +1,6 @@
 w=a.width=innerWidth
 h=a.height=innerHeight
-g=a.getContext('webgl')
+g=a.getContext('webgl')||a.getContext('experimental-webgl')
 g.enable(g.DEPTH_TEST)
 g.depthFunc(g.LEQUAL)
 
