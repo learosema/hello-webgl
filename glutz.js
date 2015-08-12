@@ -16,7 +16,7 @@
 
 // Laziness
 with(Math)
-	sR=sqrt,sin=sin,cos=cos,tan=tan,atan=atan,atan2=atan2;
+	sR=sqrt,sin=sin,cos=cos,tan=tan,atan=atan,atan2=atan2
 
 // Identity Matrix
 function mI(){
@@ -63,7 +63,7 @@ function mRz(a){
 	return[cos(a),sin(a),0,0,
 	      -sin(a),cos(a),0,0,
 	       0,0,1,0,
-		   0,0,0,1]
+	       0,0,0,1]
 }
 
 
@@ -71,7 +71,7 @@ function mRz(a){
 function vX(a,b){
 	return[a[1]*b[2]-a[2]*b[1],
 	       a[2]*b[0]-a[0]*b[2],
-		   a[0]*b[1]-a[1]*b[0]]
+	       a[0]*b[1]-a[1]*b[0]]
 }
 
 // Vector length
@@ -91,17 +91,17 @@ function ortho(l,r,b,t,zn,zf,tx,ty,tz){
 		   tz=-(zf+zn)/(zf-zn),
 		   [2/(r-l),0,0,
 		    0,0,2/(t-b),0,
-			0,0,0,-2/(zf-zn),
-			0,tx,ty,tz,1]
+	        0,0,0,-2/(zf-zn),
+	        0,tx,ty,tz,1]
 }
 
 // glFrustum(left, right, bottom, top, zNear, zFar)
 function frustum(l,r,b,t,zn,zf,t1,t2,t3,t4){
 	return t1=2*zn,t2=r-l,t3=t-b,t4=zf-zn,
 	       [t1/t2,0,0,0,
-		    0,t1/t3,0,0,
-			(r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,
-			0,0,(-t1*zf)/t4,0]
+	        0,t1/t3,0,0,
+	        (r+l)/t2,(t+b)/t3,(-zf-zn)/t4,-1,
+	        0,0,(-t1*zf)/t4,0]
 }
 
 // gluPerspective(fieldOfView, aspectRatio, zNear, zFar)
