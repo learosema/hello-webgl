@@ -31,11 +31,11 @@ void main() {
 </script>
 <script id=vertexShader type=x-shader/x-vertex>
 attribute vec3 pos;
-uniform mat4 uMV;
-uniform mat4 uP;
+uniform mat4 MV;
+uniform mat4 P;
 
 void main() {
-	gl_Position=uP*uMV*vec4(pos, 1.0);
+	gl_Position=P*MV*vec4(pos, 1.0);
 }
 </script>
 <script src=glutz.js></script>
