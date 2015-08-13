@@ -4,7 +4,7 @@
 // Provides some simple helper functions for webgl.
 //
 // Includes sugar around the WebGL API, 
-// vector/matrix operations and perspective utility
+// vector/matrix operations and perspective
 // utility functions.
 //
 // Notice:
