@@ -134,14 +134,18 @@ function $sh(el,s){
 	return s
 }
 
-// create program
+// create or switch shader program
 // $prog(glContext, [array of shader dom elements])
+// $prog(glContext, program)
 function $prog(g,s,p,P){
 	P="Program"
-	p=g["create"+P]()
-	s.map(function(s){g.attachShader(p,$sh(s))})
-	for(i=s.length;i--;)
-	g["link"+P](p)
+	if(/WebGLProgram/.test(s)){
+		p=s
+	}else{
+		p=g["create"+P]()
+		s.map(function(s){g.attachShader(p,$sh(s))})
+		g["link"+P](p)
+	}
 	g["use"+P](p)
 	// pollute the global namespace a bit.
 	// yes, this is dirty. ;)
