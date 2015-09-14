@@ -26,9 +26,17 @@ function mI(){
 	       0,0,0,1]
 }
 
-// Transformation Matrix
+// Transformation matrix
 function mT(x,y,z,r){
 	return r=mI(),r.splice(12,3,x,y,z),r
+}
+
+// Scale matrix
+function mS(x,y,z){
+	return[x,0,0,0,
+	       0,y,0,0,
+		   0,0,z,0,
+		   0,0,0,1]
 }
 
 // Matrix multiplication
