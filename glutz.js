@@ -50,6 +50,14 @@ function mX(a,b,c,i,j,k,l){c=[]
 	return c
 }
 
+// Matrix determinant (until 3x3), todo: gaussian elimination for >3x3 ;)
+function mDet(a,n){
+	if(n=sR(a)<4)
+		return[1,a[0],a[0]*a[3]-a[2]*a[1],
+			a[0]*a[4]*a[8]+a[3]*a[7]*a[2]+a[6]*a[1]*a[5]-
+			a[6]*a[1]*a[5]-a[3]*a[1]*a[8]-a[0]*a[7]*a[5]][n|0]
+}
+
 // Matrix for rotation around x-axis
 function mRx(a){
 	return[1,0,0,0,
