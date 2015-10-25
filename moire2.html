@@ -1,0 +1,47 @@
+<body style=background-color:#000;overflow:hidden;margin:0>
+<canvas id=a style=display:block;width:100%;height:100%></canvas>
+<script id=fragmentShader type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+#define M_PI 3.1415926535897932384626433832795
+
+vec3 lighten(vec3 c, float d) {
+	return vec3(min(1.0, c.r + d), min(1.0, c.g + d), min(1.0, c.b + d));
+}
+
+vec3 pastel(vec3 c) {
+	float avg = (c.r+c.g+c.b)/3.0;
+	return lighten(c, avg);
+}
+
+vec2 R(vec2 p,float a) {
+	return vec2( p.x*cos(a) + p.y*sin(a), 
+			    -p.x*sin(a) + p.y*cos(a));
+}
+
+void main() {
+	
+	vec2 p0 = (gl_FragCoord.xy / resolution) - vec2(0.5,0.5);
+	
+	vec2 p  = R(p0, time) + vec2(cos(time*2.0),sin(time*1.5));
+	float t = time;
+	float l = length(p);
+	float a = atan(p.y, p.x);
+	float d = sin(sqrt(abs(t+p0.x*p0.y)*abs(sin(t*p.x)))/10.0);
+	float r = cos(p.x*l*a*t*d)*sin(t/2.0*p.y*a*l);
+	float g = sin(p.y*l*a*t*d)*cos(t/3.0*p.x*a*l);
+	float b = sin(p.x*p.y*r*g*M_PI);
+	gl_FragColor = vec4(vec3(r, g, b)*l, 1.0);
+}
+</script>
+<script id=vertexShader type=x-shader/x-vertex>
+attribute vec3 pos;
+
+void main() {
+	gl_Position=vec4(pos, 1.0);
+}
+</script>
+<script src=glutz.js></script>
+<script src=moire.js></script>
