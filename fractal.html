@@ -43,7 +43,7 @@ void main() {
 	vec2 c  = R(c0, time) + vec2(cos(time*2.0)*0.4,sin(time)*0.6);
 	float j = julia(c,c, 16.0);
 	float r = j * sin(time + c0.y*2000.0*sin(time))*cos((c.x+c.y)*time*2.0)*sin(c0.y*sin(time)*3.0);
-	float g = j * cos(time + c0.y*3000.0*cos(time))*sin(c.x*time+cos(c.x+c.y)*time);
+	float g = j * cos(time + c0.y*3000.0*cos(time))*sin(c.x*time*6.0+cos(c.x+c.y)*time*333.0);
 	float b = (r + g + sin(time*6.0)*c0.y)/2.0;
 	gl_FragColor = vec4(pastel(vec3(r, g, b)), 1.0);
 }
