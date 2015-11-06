@@ -45,14 +45,13 @@ P=perspective(45,w/h,0.1,1000)
 
 $bind("pos",diceBuf,3)
 $bind("color",colorBuf,3)
-F=1
 ~function scene(time) {
 	time/=1e3
 	// clear screen
 	g.clearColor(1/5,1/5,1/5,1)
 	g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT)
 	// create transformation/rotation matrix
-	M=mX(P,mX(mT(sin(time*2)*3,cos(time*3)*1.5,sin(time)*5-10),mX(mX(mRx(time*3),mRy(time*2)),mRz(time*0.2))))
+	M=mX(P,mX(mT(sin(time*2)*3,cos(time*3)*1.5,sin(time)*5-10),mX(mX(mRx(time*3.5),mRy(time*2)),mRz(time*1.6))))
 
 	// set uniforms
 	$uni("time",time)
