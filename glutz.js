@@ -192,7 +192,7 @@ function $bind(a,b,s,t,n) {
 	t=t||g.FLOAT
 	n=n||false
 	g.bindBuffer(g.ARRAY_BUFFER,b)
-	g.vertexAttribPointer(a,s,t,n,0,0)
+	g.vertexAttribPointer(typeof a=="string"?g.getAttribLocation(p,a):a,s,t,n,0,0)
 }
 
 // set uniform matrix

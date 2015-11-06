@@ -5,26 +5,24 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
-varying vec3 vcolor;
+varying vec4 vcolor;
 
 void main() {
 	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
-	gl_FragColor = vec4(vcolor, 1.0);
+	gl_FragColor = vcolor;
 }
 </script>
 <script id=vertexShader type=x-shader/x-vertex>
 precision mediump float;
 
-attribute vec3 pos;
-attribute vec3 color;
+attribute vec4 pos;
+attribute vec4 color;
 
-uniform mat4 MV;
-uniform mat4 P;
-uniform mat4 MR;
-varying vec3 vcolor;
+uniform mat4 M;
+varying vec4 vcolor;
 
 void main() {
-	gl_Position=P*MV*MR*vec4(pos, 1.0);
+	gl_Position=M*pos;
 	vcolor=color;
 }
 </script>
