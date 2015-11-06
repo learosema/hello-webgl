@@ -15,8 +15,9 @@
 // 3. Work in progress, far from complete.
 
 // Laziness
-with(Math)
-	sR=sqrt,sin=sin,cos=cos,tan=tan,atan=atan,atan2=atan2
+Object.getOwnPropertyNames(Math).map(function(p) {
+  window[p] = Math[p];
+});
 
 // Identity Matrix
 function mI(){
@@ -41,7 +42,7 @@ function mS(x,y,z){
 
 // Matrix multiplication
 function mX(a,b,c,i,j,k,l){c=[]
-	for(i=l=sR(a.length)|0;i--;)
+	for(i=l=sqrt(a.length)|0;i--;)
 		for(k=l;k--;)
 			for(j=l;j--;){
 				if (!c[i+k*l])c[i+k*l]=0
@@ -52,7 +53,7 @@ function mX(a,b,c,i,j,k,l){c=[]
 
 // Matrix determinant (until 3x3), todo: gaussian elimination for >3x3 ;)
 function mDet(a,n){
-	if(n=sR(a)<4)
+	if(n=sqrt(a)<4)
 		return[1,a[0],a[0]*a[3]-a[2]*a[1],
 			a[0]*a[4]*a[8]+a[3]*a[7]*a[2]+a[6]*a[1]*a[5]-
 			a[6]*a[1]*a[5]-a[3]*a[1]*a[8]-a[0]*a[7]*a[5]][n|0]
@@ -69,7 +70,7 @@ function mRx(a){
 // Matrix for rotation around y-axis
 function mRy(a){
 	return[cos(a),0,-sin(a),0,
-	       0,1,0,0,0,
+	       0,1,0,0,
 	       sin(a),0,cos(a),0,
 	       0,0,0,1]
 }
@@ -92,7 +93,7 @@ function vX(a,b){
 
 // Vector length
 function vL(v){
-	return sR(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])
+	return sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])
 }
 
 // Unit vector
@@ -197,7 +198,7 @@ function $bind(a,b,s,t,n) {
 // set uniform matrix
 function $uniM(n,d,l){
 	l=g.getUniformLocation(p,n)
-	g["uniformMatrix"+sR(d.length)+"fv"](l,false,new Float32Array(d))
+	g["uniformMatrix"+sqrt(d.length)+"fv"](l,false,new Float32Array(d))
 	return l
 }
 
