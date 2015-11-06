@@ -1,0 +1,33 @@
+<body style=background-color:#000;overflow:hidden;margin:0>
+<canvas id=a style=display:block;width:100%;height:100%></canvas>
+<script id=fragmentShader type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+varying vec3 vcolor;
+
+void main() {
+	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
+	gl_FragColor = vec4(vcolor, 1.0);
+}
+</script>
+<script id=vertexShader type=x-shader/x-vertex>
+precision mediump float;
+
+attribute vec3 pos;
+attribute vec3 color;
+
+uniform mat4 MV;
+uniform mat4 P;
+uniform mat4 MR;
+varying vec3 vcolor;
+
+void main() {
+	gl_Position=P*MV*MR*vec4(pos, 1.0);
+	vcolor=color;
+}
+</script>
+<script src=glutz.js></script>
+<script src=hello-3d.js></script>
+
