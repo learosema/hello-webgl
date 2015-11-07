@@ -11,8 +11,8 @@
 //        |back |right|down |left |up   |front|
 //        +-----+-----+-----+-----+-----+-----+
 faces=   "013321126651236673374403014145546674"
-//        |0 |1 |2 |3 |4 |5 |6 |7 |
 vertices="000100110010001101111011"
+//        |0 |1 |2 |3 |4 |5 |6 |7 |
 concat=function(x,y){return Array.prototype.push.apply(x,y),x}
 w=a.width=innerWidth
 h=a.height=innerHeight
@@ -51,7 +51,9 @@ $bind("color",colorBuf,3)
 	g.clearColor(1/5,1/5,1/5,1)
 	g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT)
 	// create transformation/rotation matrix
-	M=mX(P,mX(mT(sin(time*2)*3,cos(time*3)*1.5,sin(time)*5-10),mX(mX(mRx(time*3.5),mRy(time*2)),mRz(time*1.6))))
+	// mX is matrix multiplication, mT is transformation, mR* is rotation 
+	M=mX(P,mX(mT(sin(time*2)*3,cos(time*3)*1.5,sin(time)*5-10),
+	     mX(mX(mRx(time*3.5),mRy(time*2)),mRz(time*1.6))))
 
 	// set uniforms
 	$uni("time",time)

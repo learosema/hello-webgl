@@ -6,10 +6,16 @@ precision mediump float;
 uniform float time;
 uniform vec2 resolution;
 varying vec4 vcolor;
+varying vec4 vpos;
+varying mat4 vM;
 
 void main() {
 	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
-	gl_FragColor = vcolor;
+	vec2 p = (gl_FragCoord.xy / resolution) - vec2(0.5,0.5);
+	vec4 P = vM * vpos;
+	float l1 = distance(vec4(p,0.0,1.0),P);
+	float l2 = distance(vec4(p+vec2(sin(time),cos(time)),0.0,1.0),P);
+	gl_FragColor = vcolor*0.8+abs(sin((l1+l2)*0.6))*0.6;
 }
 </script>
 <script id=vertexShader type=x-shader/x-vertex>
@@ -20,10 +26,13 @@ attribute vec4 color;
 
 uniform mat4 M;
 varying vec4 vcolor;
-
+varying vec4 vpos;
+varying mat4 vM;
 void main() {
 	gl_Position=M*pos;
 	vcolor=color;
+	vpos=pos;
+	vM=M;
 }
 </script>
 <script src=glutz.js></script>
