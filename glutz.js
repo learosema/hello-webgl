@@ -19,6 +19,25 @@ Object.getOwnPropertyNames(Math).map(function(p) {
   window[p] = Math[p];
 });
 
+// a square
+function sq(s){
+	s=s||1
+	return[s,s,0,-s,s,0,s,-s,0,-s,-s,0]
+}
+
+// a cube
+function qb(s,r,f,v,i,j){ 
+	f="013321126651236673374403014145546674"
+	v="000100110010001101111011"
+	for(r=[],s=s||1,i=f.length;i--;)
+		Array.prototype.push.apply(r,function(j){return[
+			v[ j ]==1?s:-s,
+			v[j+1]==1?s:-s,
+			v[j+2]==1?s:-s,
+		]}(f[i]*3))
+	return r
+}
+
 // Identity Matrix
 function mI(){
 	return[1,0,0,0,
@@ -152,22 +171,29 @@ function $sh(el,s){
 }
 
 // create or switch shader program
-// $prog(glContext, [array of shader dom elements])
-// $prog(glContext, program)
-function $prog(g,s,p,P){
+// define: $prog(glContext, array of shader dom elements, [array of attributes])
+// switch: $prog(glContext, program, [obj of uniforms], [obj of buffers])
+function $prog(g,s,a,b,p,P,i){
+	window.g=g
 	P="Program"
 	if(/WebGLProgram/.test(s)){
-		p=s
-	}else{
-		p=g["create"+P]()
-		s.map(function(s){g.attachShader(p,$sh(s))})
-		g["link"+P](p)
+		// switch program
+		g["use"+P](window.p=p)
+		// set uniforms
+		if(a&&typeof(a)=="object")for(i in a);
+		// bind buffers to attributes
+		if(b&&typeof(b)=="object")for(i in b);
+		return p
 	}
+	// define program
+	p=g["create"+P]()
+	s.map(function(s){g.attachShader(p,$sh(s))})
+	g["link"+P](p)
 	g["use"+P](p)
 	// pollute the global namespace a bit.
-	// yes, this is dirty. ;)
-	window.g=g
 	window.p=p
+	// set attributes
+	if(a&&a.length)for(i=a.length;i--;)$attr(a[i])
 	return p
 }
 
