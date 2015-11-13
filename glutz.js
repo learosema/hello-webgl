@@ -173,16 +173,13 @@ function $sh(el,s){
 // create or switch shader program
 // define: $prog(glContext, array of shader dom elements, [array of attributes])
 // switch: $prog(glContext, program, [obj of uniforms], [obj of buffers])
-function $prog(g,s,a,b,p,P,i){
+function $prog(g,s,a,c,p,P,i){
 	window.g=g
 	P="Program"
 	if(/WebGLProgram/.test(s)){
 		// switch program
-		g["use"+P](window.p=p)
-		// set uniforms
-		if(a&&typeof(a)=="object")for(i in a);
-		// bind buffers to attributes
-		if(b&&typeof(b)=="object")for(i in b);
+		g["use"+P](window.p=s)
+		if(a&&a.length)for(i=a.length;i--;)$attr(a[i])
 		return p
 	}
 	// define program
@@ -211,6 +208,11 @@ function $buf(v,b){
 function $attr(l,r){
 	return r=g.getAttribLocation(p, l),g.enableVertexAttribArray(r),r
 }
+
+function $attrOff(l,r){
+	return r=g.getAttribLocation(p, l),g.disableVertexAttribArray(r),r
+}
+
 
 // bind attribute to buffer
 // $bind(attr, buffer)
