@@ -1,0 +1,69 @@
+<body style=background-color:#000;overflow:hidden;margin:0>
+<canvas id=a style=display:block;width:100%;height:100%></canvas>
+<script id=fs2 type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+varying vec4 vcolor;
+varying vec4 vpos;
+varying mat4 vM;
+
+void main() {
+	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
+	vec2 p = (gl_FragCoord.xy / resolution) - vec2(0.5,0.5);
+	vec4 P = vM * vpos;
+	float l1 = distance(vec4(p,0.0,1.0),P);
+	float l2 = distance(vec4(p+vec2(sin(time),cos(time)),0.0,1.0),P);
+	gl_FragColor = vcolor*0.8+abs(sin((l1+l2)*0.6))*0.6;
+}
+</script>
+<script id=vs2 type=x-shader/x-vertex>
+precision mediump float;
+
+attribute vec4 pos;
+attribute vec4 color;
+
+uniform mat4 M;
+varying vec4 vcolor;
+varying vec4 vpos;
+varying mat4 vM;
+void main() {
+	gl_Position=M*pos;//-vec4(0.0,0.0,0.5,0.0);
+	vcolor=color;
+	vpos=pos;
+	vM=M;
+}
+</script>
+<script id=fs1 type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+//uniform vec2 mouse;
+
+void main() {
+	vec2 uv = gl_FragCoord.xy / resolution;
+	uv.x=(uv.x-0.5)+cos(time/2.0)*1.2;
+	uv.y=(uv.y-0.5)+sin(time/2.0)*0.8;
+	uv.x*=sin((uv.x+time*0.9)/10.0)*resolution.x/200.0;
+	uv.y*=cos((uv.y+time)/3.0)*resolution.y/200.0;
+	float r = cos(time)-cos(uv.x*uv.y*cos(sin(time)*uv.x)*1.0)*cos(uv.x*uv.y*sin(sin(time)*uv.x)*1.0);
+	float g = sin(uv.x*uv.y*cos(cos(time)*uv.x)*1.0)*cos(uv.x*uv.y*sin(cos(time)*uv.x)*1.0);
+	float b = sin(time)-sin(uv.x*uv.y*sin(cos(time)*uv.x)*1.0)*cos(uv.x*uv.y*cos(sin(time)*uv.x)*1.0);
+	//if (uv.x>0.49&&uv.x<0.51||uv.y>0.49&&uv.y<0.51) b=0.0;
+  	gl_FragColor = vec4( vec3( r, g, b), 1.0 );	
+}
+</script>
+<script id=vs1 type=x-shader/x-vertex>
+precision mediump float;
+attribute vec4 pos;
+uniform mat4 M;
+void main(){
+	gl_Position=M*pos;
+}
+</script>
+
+<script src=glutz.js></script>
+<script src=multiple-shaders.js></script>
+
