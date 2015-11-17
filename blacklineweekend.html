@@ -1,0 +1,60 @@
+<body style=background-color:#000;overflow:hidden;margin:0>
+<canvas id=a style=display:block;width:100%;height:100%></canvas>
+<script id=fs2 type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+varying vec4 vpos;
+varying mat4 vM;
+
+void main() {
+	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
+	vec2 p = (gl_FragCoord.xy / resolution) - vec2(0.5,0.5);
+	vec4 P = vM * vpos;
+	float l1 = distance(vec4(p,0.0,1.0),P);
+	float l2 = distance(vec4(p+vec2(sin(time),cos(time)),0.0,1.0),P);
+	gl_FragColor = vec4(1.0,1.0,1.0,1.0)*abs(sin((l1+l2)*1.6))*1.6;
+}
+</script>
+<script id=vs2 type=x-shader/x-vertex>
+precision mediump float;
+
+attribute vec4 pos;
+
+uniform mat4 M;
+varying vec4 vpos;
+varying mat4 vM;
+void main() {
+	gl_Position=M*pos;//-vec4(0.0,0.0,0.5,0.0);
+	vpos=pos;
+	vM=M;
+}
+</script>
+<script id=fs1 type=x-shader/x-fragment>
+precision mediump float;
+
+uniform float time;
+uniform vec2 resolution;
+//uniform vec2 mouse;
+
+void main() {
+	vec2 uv = gl_FragCoord.xy / resolution;
+	uv.x=(uv.x-0.5)+cos(time/2.0)*1.2;
+	uv.y=(uv.y-0.5)+sin(time/2.0)*0.8;
+	float l = 1.0 - sin(time+sin((uv.x+sin(uv.y)*sin(uv.x+time)*0.5)*3.0*uv.y)*uv.y*(300.0));
+  	gl_FragColor = vec4( vec3( l, l, l), 1.0 );	
+}
+</script>
+<script id=vs1 type=x-shader/x-vertex>
+precision mediump float;
+attribute vec4 pos;
+uniform mat4 M;
+void main(){
+	gl_Position=M*pos;
+}
+</script>
+
+<script src=glutz.js></script>
+<script src=blacklineweekend.js></script>
+
