@@ -258,7 +258,8 @@ function $tex2d(img,p,i,t){
 	g.texImage2D(g.TEXTURE_2D, 0, g.RGBA, g.RGBA, g.UNSIGNED_BYTE, img)
 }
 
-// load images, call back f(u) when ready
+// Simple image preloader
+// load images (u = array of urls), call back f([array of image objects]) when ready
 function $load(u,f,i,j,k){
 	for(k=j=u.length;j--;)
 		i=new Image(),
