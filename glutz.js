@@ -243,3 +243,27 @@ function $uni(n,d,l){
 	if(typeof(d)=="number")g.uniform1f(l,d)
 	return l
 }
+
+// Create texture from image
+function $tex2d(img,p,i,t){
+	p=p||[
+		g.TEXTURE_2D, g.TEXTURE_WRAP_S, g.CLAMP_TO_EDGE,
+		g.TEXTURE_2D, g.TEXTURE_WRAP_T, g.CLAMP_TO_EDGE,
+		g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, g.LINEAR,
+		g.TEXTURE_2D, g.TEXTURE_MAG_FILTER, g.LINEAR
+	]
+	t=g.createTexture()
+	g.bindTexture(g.TEXTURE_2D,t)
+	for(i=(p.length/3)|0;i--;)gl.texParameteri(p[i*3],p[i*3+1],p[i*3+2])
+	g.texImage2D(g.TEXTURE_2D, 0, g.RGBA, g.RGBA, g.UNSIGNED_BYTE, img)
+}
+
+// load images, call back f(u) when ready
+function $load(u,f,i,j,k){
+	for(k=j=u.length;j--;)
+		i=new Image(),
+		i.src=u[j],
+		i.onload=function(){if(!--k)f(u)},
+		u[j]=i
+}
+
