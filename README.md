@@ -9,7 +9,7 @@ This [repository](https://github.com/terabaud/hello-webgl/) features my experime
 
 # Older Demos
 
-The older demos use an esoteric coding style library I wrote in the 2015s. It is very low level and provides helper functions for compiling shaders. The code itself is horrible, but the examples may be useful. Most of the examples just draw a square to the fullscreen and let the
+The older demos use an esoteric coding style library I wrote in the 2015s. It is very low level and provides helper functions for compiling shaders. The code itself of the library is hard to read, but the examples may be useful. Most of the examples just draw a square to the fullscreen and let the
 fragment shader do its work.
 
 A rewrite of the ugly libary is in progress, still providing low level helper functions in WebGL, but in clean modular JS. See: [GLea](lib/glea/)
