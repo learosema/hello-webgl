@@ -1,0 +1,22 @@
+{
+  "name": "hello-webgl",
+  "version": "1.0.0",
+  "description": "This [repository](https://github.com/terabaud/hello-webgl/) features my experiments with WebGL.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terabaud/hello-webgl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terabaud/hello-webgl/issues"
+  },
+  "homepage": "https://github.com/terabaud/hello-webgl#readme"
+}
