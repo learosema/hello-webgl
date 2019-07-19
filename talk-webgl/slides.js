@@ -7,7 +7,7 @@ class App {
 
   async getSlides() {
     const { md } = this;
-    const response = await fetch("README.md", {cache: "no-cache"})
+    const response = await fetch("SLIDES.md", {cache: "no-cache"})
     const text = await response.text();
     this.slides = md.render(text).split('<hr>').map((slide, idx) => {
       const div = document.createElement('div');
