@@ -67,11 +67,20 @@ void main() {
 -------------------------------------------------
 # GL Shader Language
 
-## Datatypes
+## Datatype
 
-- primitives (int, float)
+- primitives (bool, int, float)
 - vectors (vec2, vec3, vec4)
 - matrices (mat2, mat3, mat4)
+- texture data (sampler2D)
+
+------------------------------------------------
+# Passing Data from JS
+
+- `attribute`: the variable pulls a value from a buffer
+- `uniform`: like a global variables you set before you execute the shader
+- `varying`: a variable that is passed from the vertex to the fragment shader
+
 -------------------------------------------------
 # GL Shader Language
 ## Cool built-in functions
@@ -79,15 +88,7 @@ void main() {
 - `sin`, `cos`, `atan`
 - Linear Interpolation (`mix`)
 - Vector arithmetics (`+`, `-`, `*`, `/`, `dot`, `cross`, `length`)
-- Matrix arithmetics (`multiplication`)
-
---------------------------------------------------
-# Passing data
-
-- Buffers can be passed via an `attribute`
-- JavaScript variables can be passed via `uniform`
-- Textures (images, but can be any data)
-- Veryings (pass data from vertex to fragment shader)
+- Matrix arithmetics (`+`, `-`, `*`)
 
 ----------------------------------------------------
 # Running it in JS
