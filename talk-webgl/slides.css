@@ -41,10 +41,10 @@ nav li {
 
 nav li a {
   font-size: 0;
-  width: 16px;
-  height: 16px;
+  width: calc(1vw + 1vh + .5vmin);
+  height: calc(1vw + 1vh + .5vmin);
   border-radius: 50%;
-  margin: 8px;
+  margin: calc(.25vw + .25vh + .125vmin);
   background: darkred;
   border: 2px solid #ffffff;
   display: block
@@ -59,14 +59,15 @@ nav li a:focus, nav li.current a {
   50% { transform: scale(1.5); }
 }
 
+
+
 .slide {
   max-width: 1440px;
   min-height: 100vh;
   margin: 0 auto;
-  font-size: 24px;
+  font-size: calc(1vw + 1vh + .5vmin);
   padding: 48px;
 }
-
 
 .slide__image {
   float: left;
@@ -88,15 +89,16 @@ nav li a:focus, nav li.current a {
 }
 
 .slide h1 {
-  font-size: 64px;
+  font-size: 2.0;
+
 }
 
 .slide h2 {
-  font-size: 48px;
+  font-size: 1.5;
 }
 
 .slide h3, h4, h5, p, ul {
-  font-size: 32px;
+  font-size: 1.2;
 }
 
 .clock {
