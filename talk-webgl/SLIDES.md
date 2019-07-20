@@ -14,7 +14,7 @@ at SinnerSchrader
 
 - It's a Graphics Library in JS :)
 - It drawing lines, shapes, triangles
-- It runs code on the GPU
+- It's an API to run code on the GPU
 
 -------------------------------------------------
 # Code on the GPU: WebGL Shaders
@@ -23,7 +23,7 @@ at SinnerSchrader
 - Fragment shader
 
 -------------------------------------------------
-# WebGL Shaders
+# Code on the GPU: WebGL Shaders
 
 - Vertex Shader => computes vertex positions
 - Fragment Shader => handles rasterization
