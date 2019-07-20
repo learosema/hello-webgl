@@ -6,8 +6,9 @@
 
 ## Hi! I'm Lea Rosema
 
-I'm a Junior Frontend Developer
-at SinnerSchrader
+Junior Frontend Developer
+
+SinnerSchrader
 
 -------------------------------------------------
 # What is WebGL
@@ -17,17 +18,16 @@ at SinnerSchrader
 - It's an API to run code on the GPU
 
 -------------------------------------------------
-# Code on the GPU: WebGL Shaders
+# Code on the GPU: Shaders
 
 - Vertex shader
 - Fragment shader
 
 -------------------------------------------------
-# Code on the GPU: WebGL Shaders
+# Code on the GPU: Shaders
 
 - Vertex Shader => computes vertex positions
 - Fragment Shader => handles rasterization
-- together, they are called WebGL Program
 
 -------------------------------------------------
 # GL Shader Language
@@ -47,7 +47,7 @@ void main() {
 }
 ```
 
-- Via the position attribute, the shader gets a position from a buffer
+- Via the position attribute, the shader gets data from a buffer
 - the shader is run for each position in the position buffer
 
 ----------------------------------------------------
@@ -80,6 +80,8 @@ void main() {
 - `attribute`: the variable pulls a value from a buffer
 - `uniform`: like a global variables you set before you execute the shader
 - `varying`: a variable that is passed from the vertex to the fragment shader
+
+## [DEMO](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
 
 -------------------------------------------------
 # GL Shader Language
@@ -132,23 +134,29 @@ program.linkProgram()
 
 ```js
 // enable the position attribute
-const positionAttrib = this.gl.getAttribLocation(program, 'position');
-this.gl.enableVertexAttribArray(program, positionAttrib);
+const positionLoc = this.gl.getAttribLocation(program, 'position');
+this.gl.enableVertexAttribArray(positionLoc);
 ```
 
 ------------------------------------------------------
 # Running it in JS
 
-## Assign Data to attributes
+## Assign a buffer to the attribute
 
 ```js
 // provide 2D data for a triangle
 const data = [-1, -1,  -1,  1,  1, -1],
 const buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 gl.bufferData(gl.ARRAY_BUFFER,
   new Float32Array(data), gl.STATIC_DRAW);
-gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, false, 0,0);
+```
+
+-----------------------------------------------------
+
+```js
+const recordSize = 2;
+gl.vertexAttribPointer(positionLoc, recordSize, gl.FLOAT, false, 0, 0);
 ```
 
 -----------------------------------------------------
@@ -183,5 +191,7 @@ animLoop();
 ------------------------------------------------------
 # Resources
 
-- Repo to this talk:[https://github.com/terabaud/hello-webgl/](https://github.com/terabaud/hello-webgl/)
-- WebGL fundamentals: [https://webglfundamentals.org](https://webglfundamentals.org)
+- [https://github.com/terabaud/hello-webgl/](https://github.com/terabaud/hello-webgl/)
+- [https://github.com/terabaud/hello-webgl/tree/gh-pages/glea/](https://github.com/terabaud/hello-webgl/tree/gh-pages/glea/)
+- [https://github.com/vaneenige/phenomenon/](https://github.com/vaneenige/phenomenon/)
+- [https://webglfundamentals.org](https://webglfundamentals.org)

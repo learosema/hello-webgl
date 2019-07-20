@@ -15,8 +15,11 @@ class App {
       const images = [...div.querySelectorAll('img')];
       images.forEach(image => {
         image.parentElement.setAttribute('class', 'slide__image');
-      })
-
+      });
+      const anchors = [...div.querySelectorAll('a')];
+      anchors.forEach(anchor => {
+        anchor.setAttribute('target', '_blank');
+      });
       return {
         id: 'slide' + idx,
         title: (div.querySelector('h1') || {}).textContent,
