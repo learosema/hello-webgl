@@ -16,8 +16,8 @@ const glea = new GLea({
     GLea.fragmentShader(frag),
     GLea.vertexShader(vert)
   ],
-  attribs: [
-    'position'
-  ]
+  buffers: {
+    position: Glea.buffer(2, [1, 1, 1, 0, 0, 0])
+  }
 }).create();
 ```
