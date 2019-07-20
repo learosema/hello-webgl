@@ -8,6 +8,7 @@ body {
   background: papayawhip;
   color: #ff6f00;
   font-family: 'Ubuntu', sans-serif;
+  font-size: calc(14px + (20 - 14) * ((100vw - 300px) / (1600 - 300)));
   line-height: 1.5;
   margin: 0;
   width: 100vw;
@@ -18,8 +19,8 @@ nav {
   position: fixed;
   width: 100%;
   z-index: 2;
-  top: 16px;
-  padding: 1rem;
+  bottom: 1em;
+  padding: 1em;
   display: flex;
   justify-content: center;
 }
@@ -65,8 +66,8 @@ nav li a:focus, nav li.current a {
   max-width: 1440px;
   min-height: 100vh;
   margin: 0 auto;
-  font-size: calc(1vw + 1vh + .5vmin);
-  padding: 48px;
+  font-size: 1em;
+  padding: 1em;
 }
 
 .slide__image {
@@ -89,20 +90,27 @@ nav li a:focus, nav li.current a {
 }
 
 .slide h1 {
-  font-size: 2.0;
+  font-size: 3.0em;
+  margin: 0.5em 0;
 
 }
 
 .slide h2 {
-  font-size: 1.5;
+  font-size: 2.6em;
+  margin: 0.5em 0;
 }
 
 .slide h3, h4, h5, p, ul {
-  font-size: 1.2;
+  font-size: 2.0em;
+  margin: 0.5em 0;
+}
+
+.slide ul {
+  padding: 0 0 0 1em;
 }
 
 .clock {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
+  bottom: 1em;
+  right: 1em;
 }
