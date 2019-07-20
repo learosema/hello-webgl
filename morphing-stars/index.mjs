@@ -25,5 +25,4 @@ function loop(time) {
   requestAnimationFrame(loop);
 }
 
-glea.setAttribPointer('position', 2);
 loop(0);
