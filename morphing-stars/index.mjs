@@ -7,7 +7,7 @@ const glea = new GLea({
     GLea.vertexShader(vert)
   ],
   buffers: {
-    'position': GLea.buffer(2, [1, 1,  -1, 1,  1,-1,  -1,-1])
+    'position': GLea.buffer([1, 1,  -1, 1,  1,-1,  -1,-1])
   }
 }).create();
 
@@ -25,4 +25,5 @@ function loop(time) {
   requestAnimationFrame(loop);
 }
 
+glea.setAttribPointer('position', 2);
 loop(0);
