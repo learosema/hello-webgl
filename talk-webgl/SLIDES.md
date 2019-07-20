@@ -179,3 +179,9 @@ animLoop();
 # Putting it all together
 
 * [Lets do it on Codepen](https://codepen.io/terabaud)
+
+------------------------------------------------------
+# Resources
+
+- Repo to this talk:[https://github.com/terabaud/hello-webgl/](https://github.com/terabaud/hello-webgl/)
+- WebGL fundamentals: [https://webglfundamentals.org](https://webglfundamentals.org)
