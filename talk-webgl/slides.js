@@ -41,7 +41,7 @@ class App {
     } else {
       window.scrollTo(0, 0);
     }
-    window.addEventListener('scroll', this.handleScroll);
+    this.el.addEventListener('scroll', this.handleScroll);
     this.handleScroll();
     window.addEventListener('keyup', this.handleKeyStroke);
     this.timeLeft = 20 * 60;
@@ -106,13 +106,14 @@ class App {
       this.prevSlide();
       return;
     }
+    e.preventDefault();
   }
 
   goTo(hash) {
     const hashElement = document.querySelector(hash);
     if (hashElement) {
-      const position = Math.round(hashElement.getBoundingClientRect().top + window.scrollY);
-      window.scrollTo(0, position);
+      const position = Math.round(hashElement.getBoundingClientRect().top + this.el.scrollTop);
+      this.el.scrollTo(0, position);
       if (hash !== document.location.hash) {
         history.replaceState(null, null, hash)
       }
@@ -146,7 +147,7 @@ class App {
       <div class="slide" id="${slide.id}">
         ${slide.content}
       </div>`).join('')}
-    
+
       <div class="clock"></div>
     `;
   }
