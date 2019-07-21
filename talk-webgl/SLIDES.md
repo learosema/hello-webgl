@@ -208,7 +208,7 @@ animLoop();
 ------------------------------------------------------
 # Putting it all together
 
-* [Lets do it on Codepen](https://codepen.io/terabaud)
+* [DEMO](https://codepen.io/terabaud/pen/eqNjjY?editors=0010)
 
 ------------------------------------------------------
 # Resources
