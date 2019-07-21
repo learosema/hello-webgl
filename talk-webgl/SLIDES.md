@@ -33,7 +33,7 @@ SinnerSchrader
 # GL Shader Language
 
 - GPU-specific language GL Shader language (GLSL)
-- It's like C with a `void main()`
+- It's like C++ with a `void main()`
 - but with built-in datatypes useful for 2d/3d
 
 ----------------------------------------------------
@@ -63,6 +63,19 @@ void main() {
 ```
 - The fragment shader is run for each fragment
 - For each pixel in the triangle (or line, or point)
+-------------------------------------------------
+# Passing Data from JS
+
+- `attribute`: the variable pulls a value from a buffer
+- `uniform`: like a global variables you set before you execute the shader
+- `varying`: a variable that is passed from the vertex to the fragment shader
+
+
+-------------------------------------------------
+
+# Let's try GLSL
+
+## [DEMO](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
 
 -------------------------------------------------
 # GL Shader Language
@@ -74,16 +87,7 @@ void main() {
 - matrices (mat2, mat3, mat4)
 - texture data (sampler2D)
 
-------------------------------------------------
-# Passing Data from JS
-
-- `attribute`: the variable pulls a value from a buffer
-- `uniform`: like a global variables you set before you execute the shader
-- `varying`: a variable that is passed from the vertex to the fragment shader
-
-## [DEMO](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
-
--------------------------------------------------
+---------------------------------------------------
 # GL Shader Language
 ## Cool built-in functions
 
@@ -116,6 +120,8 @@ gl.shaderSource(fragmentShader, vertexCode);
 gl.compileShader();
 ```
 
+* Like in C++, you have to compile your shaders first.
+
 -----------------------------------------------------
 # Running it in JS
 
@@ -127,16 +133,20 @@ program.attachShader(vertexShader)
 program.attachShader(fragmentShader)
 program.linkProgram()
 ```
+
+* Also like in C++, the two shaders are linked into a `WebGLProgram`.
+
 ------------------------------------------------------
 # Running it in JS
 
 ## Defining attributes for the vertex shader
 
 ```js
-// enable the position attribute
 const positionLoc = this.gl.getAttribLocation(program, 'position');
 this.gl.enableVertexAttribArray(positionLoc);
 ```
+
+* Activate your attribute via `enableVertexAttribArray`
 
 ------------------------------------------------------
 # Running it in JS
@@ -152,11 +162,20 @@ gl.bufferData(gl.ARRAY_BUFFER,
   new Float32Array(data), gl.STATIC_DRAW);
 ```
 
+* Create a buffer and provide data in a `Float32Array`
+
 -----------------------------------------------------
+# Running it in JS
+
+## Set the attribute pointer
 
 ```js
 const recordSize = 2;
-gl.vertexAttribPointer(positionLoc, recordSize, gl.FLOAT, false, 0, 0);
+const stride = 0; // 0 = advance through the buffer by recordSize * sizeof(data type)
+const offset = 0; // the starting point in the buffer
+const type = gl.FLOAT; // data type
+const normalized = false; // normalize the data (unused for gl.FLOAT)
+gl.vertexAttribPointer(positionLoc, recordSize, type, normalized, stride, offset);
 ```
 
 -----------------------------------------------------
@@ -168,6 +187,9 @@ gl.vertexAttribPointer(positionLoc, recordSize, gl.FLOAT, false, 0, 0);
 const uTime = gl.getUniformLocation(program, 'time');
 gl.uniform1f(loc, tickCount);
 ```
+
+* Pass variables from JavaScript to WebGL
+* For example: pass the screen resolution, elapsed time, mouse position
 
 ------------------------------------------------------
 # Running it in JS
@@ -192,6 +214,6 @@ animLoop();
 # Resources
 
 - [https://github.com/terabaud/hello-webgl/](https://github.com/terabaud/hello-webgl/)
-- [https://github.com/terabaud/hello-webgl/tree/gh-pages/glea/](https://github.com/terabaud/hello-webgl/tree/gh-pages/glea/)
+- [https://terabaud.github.io/hello-webgl/talk-webgl/](https://terabaud.github.io/hello-webgl/talk-webgl/)
 - [https://github.com/vaneenige/phenomenon/](https://github.com/vaneenige/phenomenon/)
 - [https://webglfundamentals.org](https://webglfundamentals.org)
