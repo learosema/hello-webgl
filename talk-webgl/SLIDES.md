@@ -57,19 +57,19 @@ void main() {
 precision highp float;
 
 void main() {
-  // rgba
-  gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0);
+  gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0); // orange
 }
 ```
-- The fragment shader is run for each fragment
+- The fragment shader is run for each fragment (pixel)
 - For each pixel in the triangle (or line, or point)
+- the pixel coordinate can be read from `gl_FragCoord`
 -------------------------------------------------
 # Passing Data from JS
 
-- `attribute`: the variable pulls a value from a buffer
-- `uniform`: like a global variables you set before you execute the shader
-- `varying`: a variable that is passed from the vertex to the fragment shader
-
+- `attribute`: the vertex shader pulls a value from a buffer and stores it in here
+- `uniform`: variables you set in JS before you execute the shader
+- `varying`: pass attributes from the vertex to the fragment shader
+- `varying` values are interpolated in the fragment shaders
 
 -------------------------------------------------
 
