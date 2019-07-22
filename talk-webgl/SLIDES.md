@@ -87,10 +87,10 @@ void main() {
 
 ## Datatypes
 
-- primitives (bool, int, float)
-- vectors (vec2, vec3, vec4)
-- matrices (mat2, mat3, mat4)
-- texture data (sampler2D)
+- primitives (`bool`, `int`, `float`)
+- vectors (`vec2`, `vec3`, `vec4`)
+- matrices (`mat2`, `mat3`, `mat4`)
+- texture data (`sampler2D`)
 
 ---------------------------------------------------
 # GL Shader Language
