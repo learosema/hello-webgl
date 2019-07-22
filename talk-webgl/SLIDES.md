@@ -239,6 +239,7 @@ vec2 rotate(vec2 p, float a) {
 }
 ```
 rotate a point
+
 ------------------------------------------------------
 # Useful GLSL functions
 
