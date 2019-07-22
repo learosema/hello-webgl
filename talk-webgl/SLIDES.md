@@ -229,9 +229,6 @@ vec2 coords() {
 ```
 normalize coords and set (0, 0) to center
 
-------------------------------------------------------
-# Useful GLSL functions
-
 ```glsl
 vec2 rotate(vec2 p, float a) {
   return vec2(p.x * cos(a) - p.y * sin(a),
@@ -239,9 +236,6 @@ vec2 rotate(vec2 p, float a) {
 }
 ```
 rotate a point
-
-------------------------------------------------------
-# Useful GLSL functions
 
 ```glsl
 vec2 repeat(in vec2 p, in vec2 c) {
