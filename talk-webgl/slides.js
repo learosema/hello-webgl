@@ -45,18 +45,24 @@ class App {
     this.handleScroll();
     window.addEventListener('keyup', this.handleKeyStroke);
     this.timeLeft = 20 * 60;
-    this.displayClock();
-    window.setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft-= 1;
-      }
-      this.displayClock();
-    }, 1000);
   }
 
-  displayClock = () => {
-    const { timeLeft } = this;
-    document.querySelector('.clock').textContent = 
+  startClock() {
+    this.displayClock();
+    if (! this.timer) {
+      this.timer = window.setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft-= 1;
+        }
+        this.displayClock();
+      }, 1000);
+    }
+  }
+
+
+  displayClock() {
+    const timeLeft = this.timeLeft || 0;
+    document.querySelector('.clock').textContent =
       `${(timeLeft / 60)|0}:${(timeLeft % 60).toString().padStart(2, '0')}`;
   }
 
@@ -90,6 +96,9 @@ class App {
       if (newDot) {
         newDot.setAttribute('class', 'current');
       }
+      if (currentPos >= 1) {
+        this.startClock();
+      }
     }
   }
 
@@ -99,6 +108,7 @@ class App {
     const LEFT = 37;
     const RIGHT = 39;
     if (e.keyCode === SPACE || e.keyCode === ENTER || e.keyCode === RIGHT) {
+      this.startClock();
       this.nextSlide();
       return;
     }
