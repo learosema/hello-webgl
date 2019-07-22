@@ -11,17 +11,23 @@ Junior Frontend Developer
 SinnerSchrader
 
 -------------------------------------------------
-# What is WebGL
+# What is WebGL?
 
-- Not a 3D engine
-- It's about drawing points, lines, triangles
-- low-level API to run code on the GPU
+- it's not a 3D engine
+- it's about drawing points, lines, triangles
+- it's a low-level API to run code on the GPU
 
 -------------------------------------------------
 # Shaders
 
-- Vertex Shader => computes vertex positions
-- Fragment Shader => handles rasterization
+![A triangle](tri.png)
+
+## Drawing shapes with shaders
+
+The vertex shader computes vertex positions
+
+The fragment Shader handles rasterization
+
 
 -------------------------------------------------
 # GL Shader Language
@@ -31,7 +37,7 @@ SinnerSchrader
 - ...but with built-in datatypes and functions useful for 2D/3D
 
 ----------------------------------------------------
-# Vertex Shader Code
+# Vertex shader code
 
 ```glsl
 attribute vec3 position;
@@ -41,11 +47,12 @@ void main() {
 }
 ```
 
-- Via the position attribute, the shader gets data from a buffer
+- via the position attribute, the shader gets data from a buffer
 - the shader is run for each position in the position buffer
+- the vertex position is set via `gl_Position`
 
 ----------------------------------------------------
-# Fragment Shader Code
+# Fragment shader code
 
 ```glsl
 precision highp float;
@@ -76,7 +83,7 @@ void main() {
 -------------------------------------------------
 # GL Shader Language
 
-## Datatype
+## Datatypes
 
 - primitives (bool, int, float)
 - vectors (vec2, vec3, vec4)
@@ -100,7 +107,7 @@ void main() {
 ```js
 const gl = canvas.getContext('webgl')
 ```
-Just like in 2D canvas
+...just like initializing a 2D canvas
 
 ----------------------------------------------------
 # Running it in JS
@@ -117,7 +124,8 @@ gl.shaderSource(fragmentShader, vertexCode);
 gl.compileShader();
 ```
 
-* Like in C++, you have to compile your shaders first.
+* like in C++, you have to compile your shaders first.
+* and check if it was successful
 
 -----------------------------------------------------
 # Running it in JS
@@ -125,13 +133,14 @@ gl.compileShader();
 ## Create the program
 
 ```js
-const program = gl.createProgram()
-program.attachShader(vertexShader)
-program.attachShader(fragmentShader)
-program.linkProgram()
+const program = gl.createProgram();
+program.attachShader(vertexShader);
+program.attachShader(fragmentShader);
+program.linkProgram();
 ```
 
-* Also like in C++, the two shaders are linked into a `WebGLProgram`.
+* also like in C++, the two shaders are linked into a `WebGLProgram`.
+* you can check if the program is valid via `program.validateProgram()`
 
 ------------------------------------------------------
 # Running it in JS
@@ -152,14 +161,14 @@ this.gl.enableVertexAttribArray(positionLoc);
 
 ```js
 // provide 2D data for a triangle
-const data = [-1, -1,  -1,  1,  1, -1],
+const data = [-1, -1,  -1,  1,  1, -1];
 const buffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 gl.bufferData(gl.ARRAY_BUFFER,
   new Float32Array(data), gl.STATIC_DRAW);
 ```
 
-* Create a buffer and provide data in a `Float32Array`
+create a buffer and provide data in a `Float32Array`
 
 -----------------------------------------------------
 # Running it in JS
@@ -175,6 +184,8 @@ const normalized = false; // normalize the data (unused for gl.FLOAT)
 gl.vertexAttribPointer(positionLoc, recordSize, type, normalized, stride, offset);
 ```
 
+assign an attribute to a buffer
+
 -----------------------------------------------------
 # Running it in JS
 
@@ -184,7 +195,7 @@ gl.vertexAttribPointer(positionLoc, recordSize, type, normalized, stride, offset
 const uTime = gl.getUniformLocation(program, 'time');
 gl.uniform1f(loc, tickCount);
 ```
-
+* Possible types: floats, ints, bools, vectors, matrices
 * Pass variables from JavaScript to WebGL
 * For example: pass the screen resolution, elapsed time, mouse position
 
@@ -194,6 +205,9 @@ gl.uniform1f(loc, tickCount);
 ## Draw
 ```js
 
+createBuffers()
+setAttributes();
+
 function animLoop(time = 0) {
   setUniforms();
   gl.drawArrays(gl.TRIANGLES);
@@ -202,10 +216,52 @@ function animLoop(time = 0) {
 
 animLoop();
 ```
+
+------------------------------------------------------
+# Useful GLSL functions
+
+```glsl
+vec2 coords() {
+  float vmin = min(width, height);
+  return vec2((gl_FragCoord.x - width * .5) / vmin,
+              (gl_FragCoord.y - height * .5) / vmin);
+}
+```
+normalize coords and set (0, 0) to center
+
+------------------------------------------------------
+# Useful GLSL functions
+
+```glsl
+vec2 rotate(vec2 p, float a) {
+  return vec2(p.x * cos(a) - p.y * sin(a),
+              p.x * sin(a) + p.y * cos(a));
+}
+```
+rotate a point
+------------------------------------------------------
+# Useful GLSL functions
+
+```glsl
+vec2 repeat(in vec2 p, in vec2 c) {
+  return mod(p, c) - 0.5 * c;
+}
+```
+repetition
+
 ------------------------------------------------------
 # Putting it all together
 
 * [DEMO](https://codepen.io/terabaud/pen/eqNjjY?editors=0010)
+
+------------------------------------------------------
+# Thank you :)
+
+## Feedback and Questions
+
+- talk to me afterwards 🙂
+- DM me on twitter (`@terabaud`)
+- or file an issue in my repo
 
 ------------------------------------------------------
 # Resources
