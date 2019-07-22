@@ -13,18 +13,12 @@ SinnerSchrader
 -------------------------------------------------
 # What is WebGL
 
-- It's a Graphics Library in JS :)
-- It drawing lines, shapes, triangles
-- It's an API to run code on the GPU
+- Not a 3D engine
+- It's about drawing points, lines, triangles
+- low-level API to run code on the GPU
 
 -------------------------------------------------
-# Code on the GPU: Shaders
-
-- Vertex shader
-- Fragment shader
-
--------------------------------------------------
-# Code on the GPU: Shaders
+# Shaders
 
 - Vertex Shader => computes vertex positions
 - Fragment Shader => handles rasterization
@@ -34,7 +28,7 @@ SinnerSchrader
 
 - GPU-specific language GL Shader language (GLSL)
 - It's like C++ with a `void main()`
-- but with built-in datatypes useful for 2d/3d
+- ...but with built-in datatypes and functions useful for 2D/3D
 
 ----------------------------------------------------
 # Vertex Shader Code
@@ -57,25 +51,27 @@ void main() {
 precision highp float;
 
 void main() {
-  gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0); // orange
+  vec2 p = gl_FragCoord.xy;
+  gl_FragColor = vec4(1.0, 0.5, 0, 1.0);
 }
 ```
 - The fragment shader is run for each fragment (pixel)
-- For each pixel in the triangle (or line, or point)
 - the pixel coordinate can be read from `gl_FragCoord`
+- the output color is set in `gl_FragCoord`
+
 -------------------------------------------------
 # Passing Data from JS
 
 - `attribute`: the vertex shader pulls a value from a buffer and stores it in here
-- `uniform`: variables you set in JS before you execute the shader
-- `varying`: pass attributes from the vertex to the fragment shader
-- `varying` values are interpolated in the fragment shaders
+- `uniform`: pass variables you set in JS before you execute the shader
+- `varying`: pass values from the vertex to the fragment shader
+
 
 -------------------------------------------------
 
 # Let's try GLSL
 
-## [DEMO](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
+## [DEMO: Draw a triangle](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
 
 -------------------------------------------------
 # GL Shader Language
@@ -104,6 +100,7 @@ void main() {
 ```js
 const gl = canvas.getContext('webgl')
 ```
+Just like in 2D canvas
 
 ----------------------------------------------------
 # Running it in JS
