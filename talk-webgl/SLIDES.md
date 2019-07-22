@@ -32,6 +32,8 @@ The fragment Shader handles rasterization
 -------------------------------------------------
 # GL Shader Language
 
+## How does it look like?
+
 - GPU-specific language GL Shader language (GLSL)
 - It's like C++ with a `void main()`
 - ...but with built-in datatypes and functions useful for 2D/3D
@@ -124,8 +126,7 @@ gl.shaderSource(fragmentShader, vertexCode);
 gl.compileShader();
 ```
 
-* like in C++, you have to compile your shaders first.
-* and check if it was successful
+Like in C++, you have to compile your shaders first.
 
 -----------------------------------------------------
 # Running it in JS
@@ -139,8 +140,9 @@ program.attachShader(fragmentShader);
 program.linkProgram();
 ```
 
-* also like in C++, the two shaders are linked into a `WebGLProgram`.
-* you can check if the program is valid via `program.validateProgram()`
+Also like in C++, the two shaders are linked into a `WebGLProgram`.
+
+You can check if the program is valid via `program.validateProgram()`
 
 ------------------------------------------------------
 # Running it in JS
@@ -152,7 +154,7 @@ const positionLoc = this.gl.getAttribLocation(program, 'position');
 this.gl.enableVertexAttribArray(positionLoc);
 ```
 
-* Activate your attribute via `enableVertexAttribArray`
+Activate your attribute via `enableVertexAttribArray`
 
 ------------------------------------------------------
 # Running it in JS
@@ -168,7 +170,7 @@ gl.bufferData(gl.ARRAY_BUFFER,
   new Float32Array(data), gl.STATIC_DRAW);
 ```
 
-create a buffer and provide data in a `Float32Array`
+Create a buffer and provide data in a `Float32Array`
 
 -----------------------------------------------------
 # Running it in JS
@@ -184,7 +186,7 @@ const normalized = false; // normalize the data (unused for gl.FLOAT)
 gl.vertexAttribPointer(positionLoc, recordSize, type, normalized, stride, offset);
 ```
 
-assign an attribute to a buffer
+Assign an attribute to a buffer
 
 -----------------------------------------------------
 # Running it in JS
@@ -221,28 +223,24 @@ animLoop();
 # Useful GLSL functions
 
 ```glsl
+// normalize coords and set (0, 0) to center
 vec2 coords() {
   float vmin = min(width, height);
   return vec2((gl_FragCoord.x - width * .5) / vmin,
               (gl_FragCoord.y - height * .5) / vmin);
 }
-```
-normalize coords and set (0, 0) to center
 
-```glsl
+//rotate
 vec2 rotate(vec2 p, float a) {
   return vec2(p.x * cos(a) - p.y * sin(a),
               p.x * sin(a) + p.y * cos(a));
 }
-```
-rotate a point
 
-```glsl
+//repeat
 vec2 repeat(in vec2 p, in vec2 c) {
   return mod(p, c) - 0.5 * c;
 }
 ```
-repetition
 
 ------------------------------------------------------
 # Putting it all together
@@ -250,7 +248,7 @@ repetition
 * [DEMO](https://codepen.io/terabaud/pen/eqNjjY?editors=0010)
 
 ------------------------------------------------------
-# Thank you :)
+# Thank you 👩‍💻
 
 ## Feedback and Questions
 
@@ -258,10 +256,10 @@ repetition
 - DM me on twitter (`@terabaud`)
 - or file an issue in my repo
 
-------------------------------------------------------
-# Resources
+## Resources
 
 - [https://github.com/terabaud/hello-webgl/](https://github.com/terabaud/hello-webgl/)
 - [https://terabaud.github.io/hello-webgl/talk-webgl/](https://terabaud.github.io/hello-webgl/talk-webgl/)
 - [https://github.com/vaneenige/phenomenon/](https://github.com/vaneenige/phenomenon/)
 - [https://webglfundamentals.org](https://webglfundamentals.org)
+- [https://thebookofshaders.com/](https://thebookofshaders.com/)
