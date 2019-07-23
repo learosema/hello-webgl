@@ -66,7 +66,7 @@ void main() {
 ```
 - The fragment shader is run for each fragment (pixel)
 - the pixel coordinate can be read from `gl_FragCoord`
-- the output color is set in `gl_FragCoord`
+- the output color is set in `gl_FragColor`
 
 -------------------------------------------------
 # Passing Data from JS
