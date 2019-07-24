@@ -3,6 +3,8 @@ class App {
   constructor(el) {
     this.el = el || document.querySelector('main')
     this.md = new markdownit();
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleKeyStroke = this.handleKeyStroke.bind(this);
   }
 
   async getSlides() {
@@ -81,7 +83,7 @@ class App {
     return this.getScrollPositions().findIndex(x => x > -h + 1 && x < h);
   }
 
-  handleScroll = () => {
+  handleScroll() {
     const currentPos = this.getScrollIndex();
     const hash = '#slide' + currentPos;
     if (hash !== document.location.hash) {
@@ -102,7 +104,7 @@ class App {
     }
   }
 
-  handleKeyStroke = e => {
+  handleKeyStroke(e) {
     const SPACE = 32;
     const ENTER = 13;
     const LEFT = 37;
