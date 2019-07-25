@@ -3,6 +3,20 @@ import { frag, vert } from './shaders.mjs';
 import { perspective } from '../lib/glea/perspective.mjs';
 import GLea from '../lib/glea/glea.mjs';
 import { Mat4 } from '../lib/glea/math3d.mjs';
+
+const Color = {
+  red: [1, 0, 0],
+  green: [0, 1, 0],
+  blue: [0, 0, 1],
+  yellow: [1, 1, 0],
+  pink: [1,0,1],
+  cyan: [0, 1, 1],
+  white: [1, 1, 1]
+};
+
+const { red, green, blue, yellow, pink, cyan } = Color;
+
+
 const glea = new GLea({
   onCreate: (gl) => {
     gl.clearColor(1/5, 1/5, 1/5, 1);
@@ -15,15 +29,12 @@ const glea = new GLea({
   buffers: {
     position: GLea.buffer(3, cube(0.1)),
     color: GLea.buffer(3, [
-      1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0,
-      0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1,
-      0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1,
-      1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0,
-      0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1,
-      0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1,
-      1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0,
-      0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1,
-      0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1
+      ...red, ...red, ...red, ...red, ...red, ...red,
+      ...green, ...green, ...green, ...green, ...green, ...green,
+      ...blue, ...blue, ...blue, ...blue, ...blue, ...blue,
+      ...pink, ...pink, ...pink, ...pink, ...pink, ...pink,
+      ...cyan, ...cyan, ...cyan, ...cyan, ...cyan, ...cyan,
+      ...yellow, ...yellow, ...yellow, ...yellow, ...yellow, ...yellow
     ])
   }
 }).create();
