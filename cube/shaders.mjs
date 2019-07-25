@@ -72,7 +72,7 @@ uniform float height;
 uniform float time;
 
 void main() {
-  gl_FragColor = vcolor + vpos * sin(time * 0.001);
+  gl_FragColor = vcolor + vpos * sin(time * 0.1);
 }
 `;
 
