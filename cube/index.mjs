@@ -29,13 +29,13 @@ const glea = new GLea({
   buffers: {
     position: GLea.buffer(3, cube(0.1)),
     color: GLea.buffer(3, [
-      ...red, ...red, ...red, ...red, ...red, ...red,
-      ...green, ...green, ...green, ...green, ...green, ...green,
-      ...blue, ...blue, ...blue, ...blue, ...blue, ...blue,
-      ...pink, ...pink, ...pink, ...pink, ...pink, ...pink,
-      ...cyan, ...cyan, ...cyan, ...cyan, ...cyan, ...cyan,
-      ...yellow, ...yellow, ...yellow, ...yellow, ...yellow, ...yellow
-    ])
+      ...Array(6).fill(red),
+      ...Array(6).fill(green),
+      ...Array(6).fill(blue),
+      ...Array(6).fill(pink),
+      ...Array(6).fill(cyan),
+      ...Array(6).fill(yellow)
+    ].flat())
   }
 }).create();
 
@@ -49,7 +49,7 @@ function loop(time) {
   const { sin, cos } = Math;
   glea.clear();
   const p = perspective(45.0, glea.width / glea.height, 0.1, 1000.0);
-  const t = Mat4.Translate(sin(2 * time * 1e-3) * .3, sin(3*time * 1e-3) * .3, -.6).toArray();
+  const t = Mat4.Translate(sin(2 * time * 1e-3) * .1, sin(3*time * 1e-3) * .1, -.6).toArray();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
   glea.uni('time', time * .01);
