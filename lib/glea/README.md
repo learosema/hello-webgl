@@ -21,3 +21,9 @@ const glea = new GLea({
   }
 }).create();
 ```
+
+### Options
+
+- `shaders`: array that takes a fragmentShader and a vertexShader in the above form
+- `buffers`: an object with attributes and buffers. You can access the buffers via an attribute named as the Object keys.
+- `conCreate`: callback after creation.
