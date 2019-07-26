@@ -10,19 +10,28 @@ varying vec4 vcolor;
 uniform float time;
 uniform float width;
 uniform float height;
-uniform mat4 perspectiveMat;
-uniform mat4 translateMat;
+
 const float PI = 3.1415926535;
 
+mat4 translate(vec3 p) {
+  return mat4(
+    vec4(1.0, 0.0, 0.0, 0.0),
+    vec4(0.0, 1.0, 0.0, 0.0),
+    vec4(0.0, 0.0, 1.0, 0.0),
+    vec4(p.x, p.y, p.z, 1.0)
+  );
+}
+
+
 mat4 rotX(float angle) {
-    float S = sin(angle);
-    float C = cos(angle);
-    return mat4(
-      vec4(1.0, 0, 0, 0),
-      vec4(0  , C, S, 0),
-      vec4(0  ,-S, C, 0),
-      vec4(0  , 0, 0, 1.0)
-    );
+  float S = sin(angle);
+  float C = cos(angle);
+  return mat4(
+    vec4(1.0, 0, 0, 0),
+    vec4(0  , C, S, 0),
+    vec4(0  ,-S, C, 0),
+    vec4(0  , 0, 0, 1.0)
+  );
 }
 
 mat4 rotY(float angle) {
@@ -56,6 +65,8 @@ mat4 perspective(float fieldOfView, float aspectRatio, float zNear, float zFar) 
 }
 
 void main() {
+  mat4 perspectiveMat = perspective(45.0, width / height, 0.1, 1000.0);
+  mat4 translateMat = translate(vec3(sin(.25 * time * 1e-3) * .1, sin(.75 * time * 1e-3) * .1, -.6));
   mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1);
   gl_Position = M * vec4(position, 1.0);
   vcolor = vec4(color, 1.0);

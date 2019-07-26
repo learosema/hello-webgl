@@ -1,8 +1,6 @@
 import { cube } from '../lib/glea/geometry.mjs';
 import { frag, vert } from './shaders.mjs';
-import { perspective } from '../lib/glea/perspective.mjs';
 import GLea from '../lib/glea/glea.mjs';
-import { Mat4 } from '../lib/glea/math3d.mjs';
 
 const Color = {
   red: [1, 0, 0],
@@ -48,13 +46,9 @@ function loop(time) {
   const { gl } = glea;
   const { sin, cos } = Math;
   glea.clear();
-  const p = perspective(45.0, glea.width / glea.height, 0.1, 1000.0);
-  const t = Mat4.Translate(sin(2 * time * 1e-3) * .1, sin(3*time * 1e-3) * .1, -.6).toArray();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
   glea.uni('time', time * .01);
-  glea.uniM('translateMat', t);
-  glea.uniM('perspectiveMat', p);
   gl.drawArrays(gl.TRIANGLES, 0, 36);
   requestAnimationFrame(loop);
 }
