@@ -25,7 +25,7 @@ const glea = new GLea({
     GLea.vertexShader(vert), GLea.fragmentShader(frag)
   ],
   buffers: {
-    position: GLea.buffer(3, cube(0.1)),
+    position: GLea.buffer(3, cube(0.075)),
     color: GLea.buffer(3, [
       ...Array(6).fill(red),
       ...Array(6).fill(green),

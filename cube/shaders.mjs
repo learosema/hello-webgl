@@ -66,7 +66,7 @@ mat4 perspective(float fieldOfView, float aspectRatio, float zNear, float zFar) 
 
 void main() {
   mat4 perspectiveMat = perspective(45.0, width / height, 0.1, 1000.0);
-  mat4 translateMat = translate(vec3(sin(.25 * time * 1e-3) * .1, sin(.75 * time * 1e-3) * .1, -.6));
+  mat4 translateMat = translate(vec3(sin(2.0 * time * 1e-2) * 0.05, sin(3.0 * time * 1e-2) * .1, -.6));
   mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1);
   gl_Position = M * vec4(position, 1.0);
   vcolor = vec4(color, 1.0);
