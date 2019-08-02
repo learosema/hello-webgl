@@ -17,7 +17,7 @@ const { red, green, blue, yellow, pink, cyan } = Color;
 
 const glea = new GLea({
   onCreate: (gl) => {
-    gl.clearColor(1/5, 1/5, 1/5, 1);
+    gl.clearColor(1/6, 1/6, 1/6, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST)
   },

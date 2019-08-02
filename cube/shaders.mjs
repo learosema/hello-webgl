@@ -7,6 +7,7 @@ attribute vec3 color;
 
 varying vec4 vpos;
 varying vec4 vcolor;
+varying mat4 vM;
 uniform float time;
 uniform float width;
 uniform float height;
@@ -44,6 +45,18 @@ mat4 rotY(float angle) {
     vec4(0, 0  , 0, 1.0)
   );
 }
+
+mat4 rotZ(float angle) {
+  float S = sin(angle);
+  float C = cos(angle);
+  return mat4(
+    vec4( C, S, 0  , 0),
+    vec4(-S, C, 0  , 0),
+    vec4( 0, 0, 1.0, 0),
+    vec4( 0, 0, 0  , 1.0)
+  );
+}
+
 // glFrustum(left, right, bottom, top, zNear, zFar)
 mat4 frustum(float left, float right, float bottom, float top, float zNear, float zFar) {
   float t1 = 2.0 * zNear;
@@ -65,12 +78,13 @@ mat4 perspective(float fieldOfView, float aspectRatio, float zNear, float zFar) 
 }
 
 void main() {
+  vpos = vec4(position, 1.0);
   mat4 perspectiveMat = perspective(45.0, width / height, 0.1, 1000.0);
-  mat4 translateMat = translate(vec3(sin(2.0 * time * 1e-2) * 0.05, sin(3.0 * time * 1e-2) * .1, -.6));
-  mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1);
+  mat4 translateMat = translate(vec3(sin(2.0 * time * 1e-2) * 0.05, sin(3.0 * time * 1e-2) * .1, -1.6 + sin(time * .1)));
+  mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1) * rotZ(time * 0.25);
+  vM = M;
   gl_Position = M * vec4(position, 1.0);
   vcolor = vec4(color, 1.0);
-  vpos = gl_Position;
 }
 `;
 
@@ -78,12 +92,13 @@ export const frag = glsl`
 precision highp float;
 varying vec4 vcolor;
 varying vec4 vpos;
+varying mat4 vM;
 uniform float width;
 uniform float height;
 uniform float time;
 
 void main() {
-  gl_FragColor = vcolor + vpos * sin(time * 0.1);
+  vec4 v = vM * vpos;
+  gl_FragColor = (vcolor + normalize(v) - (1.0 - cos(v.x + time * 0.1) * sin(v.y * v.z * 2.5 + time * .01) * .5)*.25);
 }
 `;
-
