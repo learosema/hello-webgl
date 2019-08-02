@@ -2,10 +2,18 @@
 
 This [repository](https://github.com/terabaud/hello-webgl/) features my experiments with WebGL.
 
- * Live demos here: https://terabaud.github.io/hello-webgl/
+ * Live demos here: [https://terabaud.github.io/hello-webgl/](https://terabaud.github.io/hello-webgl/)
 
  * [Morphing Stars](morphing-stars/), using [Glea](lib/glea/)
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
+
+# Running it locally
+
+Type `npm install` and `npm start` to start a local development server. 
+
+Currently, there is no transpiling/bundling toolchain like Webpack and Babel/TypeScript.
+
+It's just node [express](https://expressjs.com) serving static files. As other out-of-the-box web servers require some additional configuration, I made a simple server.js on my own. 
 
 # Older Demos
 

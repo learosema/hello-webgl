@@ -7,16 +7,23 @@
     "lib": "lib"
   },
   "scripts": {
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/terabaud/hello-webgl.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Lea Rosema",
+  "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/terabaud/hello-webgl/issues"
   },
-  "homepage": "https://github.com/terabaud/hello-webgl#readme"
+  "homepage": "https://github.com/terabaud/hello-webgl#readme",
+  "keywords": [
+    "webgl"
+  ],
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
 }
