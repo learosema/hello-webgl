@@ -7,6 +7,8 @@ This [repository](https://github.com/terabaud/hello-webgl/) features my experime
  * [Morphing Stars](morphing-stars/), using [GLea](lib/glea/)
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
  * [Cube](cube/), using [GLea](lib/glea/)
+ * [Raymarching](raymarching/), using [GLea](lib/glea/)
+
 # Running it locally
 
 Type `npm install` and `npm start` to start a local development server. 

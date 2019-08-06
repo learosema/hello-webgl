@@ -14,7 +14,6 @@ const Color = {
 
 const { red, green, blue, yellow, pink, cyan } = Color;
 
-
 const glea = new GLea({
   onCreate: (gl) => {
     gl.clearColor(1/6, 1/6, 1/6, 1);
