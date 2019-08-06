@@ -66,16 +66,7 @@ vec3 background(vec3 rayDir) {
      sin(time *.2 + rayDir.y * rayDir.z * 15.0) * .1 + rayDir.y * .7);
 }
 
-// Visualize depth based on the distance
-vec3 render(vec3 rayOrigin, vec3 rayDir)
-{
-  float t = castRay(rayOrigin, rayDir);
-  if (t == -1.0) {
-    return background(rayDir);
-  }
-  vec3 col = vec3(4.0 - t * 0.35) * vec3(.7, 0, 1.0);
-  return col;
-}
+
 
 // calculate normal:
 vec3 calcNormal(vec3 pos)
@@ -85,6 +76,30 @@ vec3 calcNormal(vec3 pos)
   // Use offset samples to compute gradient / normal
   vec2 eps_zero = vec2(0.001, 0.0);
   return normalize(vec3( scene(pos + eps_zero.xyy), scene(pos + eps_zero.yxy), scene(pos + eps_zero.yyx) ) - c);
+}
+
+// Visualize depth based on the distance
+vec3 render(vec3 rayOrigin, vec3 rayDir)
+{
+  float t = castRay(rayOrigin, rayDir);
+  if (t == -1.0) {
+    return background(rayDir);
+  }
+  // shading based on the distance
+  // vec3 col = vec3(4.0 - t * 0.35) * vec3(.7, 0, 1.0);
+  
+  // shading based on the normals
+  vec3 pos = rayOrigin + rayDir * t;
+  vec3 N = calcNormal(pos);
+  vec3 L = normalize(vec3(sin(time *.1), 2.0, -0.5));
+  // L is vector from surface point to light
+  // N is surface normal. N and L must be normalized!
+  float NoL = max(dot(N, L), 0.0);
+  vec3 LDirectional = vec3(1.0, 0.9, 0.8) * NoL;
+  vec3 LAmbient = vec3(0.3);
+  vec3 col = vec3(.7, .2, 1.0); 
+  vec3 diffuse = col * (LDirectional + LAmbient);  
+  return diffuse;
 }
 
 // normalize coords and correct for aspect ratio
