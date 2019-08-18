@@ -23,21 +23,13 @@ vec3 getCameraRayDir(vec2 uv, vec3 camPos, vec3 camTarget) {
 }
 
 // distance function for a sphere
-float sphere(vec3 p, float r)
-{
+float sphere(vec3 p, float r) {
     return length(p) - r;
 }
 
-float plane( vec3 p )
-{
+float plane(vec3 p) {
 	return p.y;
 }
-
-
-//float plane(vec3 p)
-//{
-//	return p.y;
-//}
 
 float addToScene(float a, float b) {
   return min(a, b);
@@ -53,9 +45,7 @@ vec3 repeatXZ(in vec3 pos) {
   return vec3( fract(pos.x+0.5)-0.5, pos.y, fract(pos.z+0.5) - 0.5);
 }
 
-
-float scene(in vec3 pos)
-{
+float scene(in vec3 pos) {
   float t = 1e7;
   t = addToScene(t, sphere(repeatXZ(pos - vec3(0, .6 + sin(time*.5 + pos.x / 4.0 + pos.x / 4.0) * .5, 0)), .3 + deformation(pos) + .1 * sin(time * .1)));   
   t = addToScene(t, plane(pos));
@@ -89,8 +79,7 @@ vec3 background(vec3 rayDir) {
 }
 
 // calculate normal:
-vec3 calcNormal(vec3 pos)
-{
+vec3 calcNormal(vec3 pos) {
   // Center sample
   float c = scene(pos);
   // Use offset samples to compute gradient / normal
@@ -122,7 +111,6 @@ float softshadow(in vec3 ro, in vec3 rd, float mint, float maxt, float k) {
   return clamp(res, 0.0, 1.0);
 }
 
-
 // calculate ambient occlusion
 float ambientOcclusion( in vec3 pos, in vec3 nor )
 {
@@ -147,7 +135,6 @@ vec3 render(vec3 rayOrigin, vec3 rayDir)
     return background(rayDir);
   }
   
-
   vec3 material = vec3(1.0, 0.5, 0.2);
   
   // key light
@@ -156,7 +143,6 @@ vec3 render(vec3 rayOrigin, vec3 rayDir)
   vec3 lig = normalize(vec3(5.0, 10.0, 5.6));
   float dif = clamp(dot(nor, lig), 0.0, 1.0) * softshadow(pos, lig, 0.0001, 3.0, 32.0);
   
-
   vec3 col = material * 4.0 * dif * vec3(1.00,0.70,0.5);
   
   // fog
@@ -165,14 +151,12 @@ vec3 render(vec3 rayOrigin, vec3 rayDir)
 }
 
 // normalize coords and correct for aspect ratio
-vec2 normalizeScreenCoords()
-{
+vec2 normalizeScreenCoords() {
   float aspectRatio = width / height;
   vec2 result = 2.0 * (gl_FragCoord.xy / vec2(width, height) - 0.5);
   result.x *= aspectRatio; 
   return result;
 }
-
 
 float rand() {
   return fract(sin(dot(gl_FragCoord.xy + sin(time),vec2(12.9898,78.233))) * 43758.5453);
