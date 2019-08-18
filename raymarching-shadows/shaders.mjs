@@ -141,10 +141,15 @@ vec3 render(vec3 rayOrigin, vec3 rayDir)
   vec3 pos = rayOrigin + rayDir * t;
   vec3 nor = calcNormal(pos);
   vec3 lig = normalize(vec3(5.0, 10.0, 5.6));
-  float dif = clamp(dot(nor, lig), 0.0, 1.0) * softshadow(pos, lig, 0.0001, 3.0, 32.0);
+  float dif = clamp(dot(nor, lig), 0.0, 1.0) * softshadow(pos, lig, 0.00001, 3.0, 32.0);
   
   vec3 col = material * 4.0 * dif * vec3(1.00,0.70,0.5);
   
+  // ambient light
+  float occ = ambientOcclusion(pos, nor);
+  float amb = clamp( 0.5+0.5*nor.y, 0.0, 1.0 );
+  col += material * amb * occ * vec3(0.08, 0.04, 0);
+
   // fog
   col *= exp( -0.0005*t*t*t );
   return col;
@@ -168,7 +173,7 @@ void main() {
   vec2 uv = normalizeScreenCoords();
   vec3 rayDir = getCameraRayDir(uv, camPos, camTarget);
   vec3 col = render(camPos, rayDir);
-  gl_FragColor = vec4(gammaCorrect(mix(col, vec3(rand()), .025)), 1.0);
+  gl_FragColor = vec4(gammaCorrect(mix(col, vec3(rand()), .0125)), 1.0);
 }
 `
 
