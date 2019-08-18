@@ -1,13 +1,19 @@
-# Hello Webgl World!
+# Hello WebGL World!
 
-This [repository](https://github.com/terabaud/hello-webgl/) features my experiments with WebGL.
+This [repository](https://github.com/terabaud/hello-webgl/) features my experiments with WebGL. 
+Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by myself.
 
- * Live demos here: [https://terabaud.github.io/hello-webgl/](https://terabaud.github.io/hello-webgl/)
+ * [Live Demos](https://terabaud.github.io/hello-webgl/)
+ * [Slides of my talk about WebGL](https://terabaud.github.io/hello-webgl/talk-webgl/)
 
- * [Morphing Stars](morphing-stars/), using [GLea](lib/glea/)
+# Demos
+
+ * [Triangle](triangle/)
+ * [Morphing Stars](morphing-stars/)
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
- * [Cube](cube/), using [GLea](lib/glea/)
- * [Raymarching](raymarching/), using [GLea](lib/glea/)
+ * [Cube](cube/)
+ * [Raymarching](raymarching/)
+ * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
 
 # Running it locally
 
@@ -20,8 +26,6 @@ It's just node [express](https://expressjs.com) serving static files. As other o
 # Older Demos
 
 The older demos use an esoteric coding style library I wrote in the 2015s. It provides helper functions for compiling shaders and matrix/vector maths. The code itself of the library is hard to read, but the examples may be useful. Most of the examples just draw a square to the fullscreen and let the fragment shader do its work.
-
-A rewrite of the esoteric libary is in progress, still providing low level helper functions in WebGL, but in clean modular JS. See: [GLea](lib/glea/)
 
 * [Glitchy Mandelbrot](fractal.html)
 * [Black Line Weekend](blacklineweekend.html)
