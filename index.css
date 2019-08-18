@@ -1,18 +1,13 @@
 body {
-	font-family: monospace;
-	font-size: 2em;
-	color: #7f9;
-	background-color: #333
+	color: #fff;
+	color: #201d1c;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 16px;
+	line-height: 1.8;
+	max-width: 1000px;
+	margin: 16px auto;
 }
 
 h1, h2, h3, h4, h5 {
-	color: #fff;
-}
-
-a {
-	color: #7bf;
-}
-
-a:active, a:hover, a:focus {
-	color: #9ef;
+	color: #e77a22;
 }
