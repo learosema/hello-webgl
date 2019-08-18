@@ -26,10 +26,15 @@ const glea = new GLea({
 
 - `shaders`: array that takes a fragmentShader and a vertexShader in the above form
 - `buffers`: an object with attributes and buffers. You can access the buffers via an attribute named as the Object keys.
-- `onCreate`: callback after creation.
+- `onCreate`: callback after creation. **(deprecated: I think it can be removed)**
 
 ### Properties
 
 - `glea.gl`: the `WebGLRenderingContext`
 - `glea.width`: viewport width
 - `glea.height`: viewport height
+
+### Methods
+
+- `glea.create()` - creates the WebGLRenderingContext, compiles and links shaders, registers attributes and buffers.
+- `glea.resize()` - resizes the WebGL viewport to the current canvas client size. Call this inside a `resize` event listener.
