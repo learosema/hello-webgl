@@ -12,6 +12,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Morphing Stars](morphing-stars/)
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
  * [Cube](cube/)
+ * [Texture mapping](texture-mapping/)
  * [Raymarching](raymarching/)
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
 
