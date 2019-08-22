@@ -3,12 +3,28 @@ import { loadImage } from './image-loader.mjs';
 import { frag, vert } from './shaders.mjs';
 import GLea from '../lib/glea/glea.mjs';
 
+
+const Color = {
+  red: [1, 0, 0],
+  green: [0, 1, 0],
+  blue: [0, 0, 1],
+  yellow: [1, 1, 0],
+  pink: [1,0,1],
+  cyan: [0, 1, 1],
+  white: [1, 1, 1],
+  orange: [1, .5, 0],
+  skyblue: [.25, .5, 1]
+};
+
+const { red, green, blue, yellow, pink, cyan, skyblue, orange } = Color;
+
+
 const glea = new GLea({
   shaders: [
     GLea.vertexShader(vert), GLea.fragmentShader(frag)
   ],
   buffers: {
-    position: GLea.buffer(3, cube(0.075)),
+    position: GLea.buffer(3, cube(.5)),
     texCoord: GLea.buffer(2, 
       Array(6).fill([
         0.0,  0.0,
@@ -18,7 +34,15 @@ const glea = new GLea({
         1.0,  0.0,
         1.0,  1.0
       ]).flat()
-    )
+    ),
+    color: GLea.buffer(3, [
+      ...Array(6).fill(red),
+      ...Array(6).fill(green),
+      ...Array(6).fill(blue),
+      ...Array(6).fill(pink), 
+      ...Array(6).fill(skyblue),
+      ...Array(6).fill(orange)
+    ].flat())
   }
 }).create();
 

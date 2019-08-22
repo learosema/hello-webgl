@@ -5,7 +5,9 @@ export const vert = glsl`
 precision highp float;
 attribute vec3 position;
 attribute vec2 texCoord;
+attribute vec3 color;
 
+varying vec3 vcolor;
 varying vec4 vpos;
 varying vec2 vtexCoord;
 varying mat4 vM;
@@ -81,12 +83,12 @@ mat4 perspective(float fieldOfView, float aspectRatio, float zNear, float zFar) 
 void main() {
   mat4 perspectiveMat = perspective(45.0, width / height, 0.1, 1000.0);
   mat4 translateMat = translate(vec3(sin(2.0 * time * 1e-2) * 0.05, sin(3.0 * time * 1e-2) * .1, -1.6 + sin(time * .1)));
-  mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1) * rotZ(time * 0.25);
+  mat4 M = perspectiveMat * translateMat * rotX(time * 0.1) * rotY(time * 0.1) * rotZ(time * 0.01);
 
   vM = M;
   vpos = vec4(position, 1.0);
   vtexCoord = texCoord;
-
+  vcolor = color;
   gl_Position = M * vec4(position, 1.0);
 }
 `;
@@ -96,6 +98,7 @@ precision highp float;
 varying vec4 vpos;
 varying mat4 vM;
 varying vec2 vtexCoord;
+varying vec3 vcolor;
 
 uniform float width;
 uniform float height;
@@ -103,7 +106,20 @@ uniform float time;
 
 uniform sampler2D image;
 
+// normalize coords and correct for aspect ratio
+vec2 normalizeScreenCoords()
+{
+  float aspectRatio = width / height;
+  vec2 result = 2.0 * (gl_FragCoord.xy / vec2(width, height) - 0.5);
+  result.x *= aspectRatio; 
+  return result;
+}
+
+
 void main() {
-   gl_FragColor = texture2D(image, vtexCoord);
+  vec2 p = normalizeScreenCoords();
+  vec4 a = texture2D(image, vtexCoord);
+  vec4 b = vec4(a.x * vcolor, 1.0);
+  gl_FragColor = mix(a, b, vec4(.5 * (1.0 + sin(p.x * p.y * (3.0 + 2.0 * sin(time)) + time * .25))));
 }
 `;
