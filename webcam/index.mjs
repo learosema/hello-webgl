@@ -66,7 +66,7 @@ async function setup() {
 
     loop(0);
   } catch (ex) {
-    console.err(ex.message);
+    console.error(ex.message);
   }
 }
 
