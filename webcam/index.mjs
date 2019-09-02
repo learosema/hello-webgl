@@ -1,8 +1,11 @@
 import { frag, vert } from './shaders.mjs';
 import GLea from '../lib/glea/glea.mjs';
 
-const video = document.querySelector('video');
+let video = document.querySelector('video');
+let fallbackImage = null;
+
 let texture = null;
+
 
 const glea = new GLea({
   shaders: [
@@ -21,9 +24,7 @@ window.addEventListener('resize', () => {
 function loop(time) {
   const { gl } = glea;
   // Upload the image into the texture.
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-
-
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
   glea.clear();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
@@ -47,28 +48,48 @@ function accessWebcam(video) {
   });
 }
 
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = url;
+    img.onload = () => {
+      resolve(img);
+    };
+    img.onerror = () => {
+      reject(img);
+    };
+  });
+}
+
 async function setup() {
   const { gl } = glea;
   try {
     await accessWebcam(video);
-    texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    
-    // Set the parameters so we can render any size image.
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    
-    // Upload the image into the texture.
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-
-
-    loop(0);
   } catch (ex) {
+    video = null;
     console.error(ex.message);
   }
+  if (! video) {
+    try {
+      fallbackImage = await loadImage('https://placekitten.com/1280/720')
+    } catch (ex) {
+      console.error(ex.message);
+      return false;
+    }
+  }
+  texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  
+  // Set the parameters so we can render any size image.
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  
+  // Upload the image into the texture.
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
+  loop(0);
 }
 
 setup();
-
