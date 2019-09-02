@@ -11,3 +11,19 @@ canvas {
 video {
   display: none;
 }
+
+button {
+  position: fixed;
+  cursor: pointer;
+  left: 50%;
+  margin-left: -64px;
+  bottom: 16px;
+  height: 64px;
+  width: 128px;
+  font-size: 48px;
+  font-family: sans-serif;
+  font-weight: bold;
+  background: rgba(255, 255, 255, .67);
+  border-radius: 8px;
+  text-align: center;
+}
