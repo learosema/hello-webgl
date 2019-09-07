@@ -31,7 +31,7 @@ function loop(time) {
   // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
 
   // the use of texSubImage2D vs texImage2D is faster
-  gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, video);
+  gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
   glea.clear();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
