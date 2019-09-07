@@ -31,5 +31,8 @@ export function grid(deltaX = 0.1, deltaY = 0.1, xMin = -1, yMin = -1, xMax = 1,
       x0, y1, x1, y0, x1, y1
     ];
   });
-  return squares.flat();
+  // for MS Edge support, let's do a slightly more complicated
+  // thing than just 
+  // return squares.flat();
+  return Array.prototype.concat.apply([], squares);
 }
