@@ -1,11 +1,13 @@
 import { frag, vert } from './shaders.mjs';
+import { grid } from './grid-geometry.mjs';
 import GLea from '../lib/glea/glea.mjs';
 
 let video = document.querySelector('video');
 let fallbackImage = null;
-
 let texture = null;
 
+const mesh = grid(.05, .05);
+const numVertices = mesh.length / 2;
 
 const glea = new GLea({
   glOptions: {
@@ -16,24 +18,25 @@ const glea = new GLea({
     GLea.vertexShader(vert)
   ],
   buffers: {
-    'position': GLea.buffer(2, [1, 1,  -1, 1,  1,-1,  -1,-1])
+    'position': GLea.buffer(2, mesh),
+    'direction': GLea.buffer(1, Array(numVertices).fill(0).map(_ => Math.random()))
   }
 }).create();
-
-window.addEventListener('resize', () => {
-  glea.resize();
-});
 
 function loop(time) {
   const { gl } = glea;
   // Upload the image into the texture.
+  // void gl.texImage2D(target, level, internalformat, format, type, HTMLVideoElement? pixels);
+  // void gl.texSubImage2D(target, level, xoffset, yoffset, format, type, HTMLVideoElement? pixels);
   // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
+
+  // the use of texSubImage2D vs texImage2D is faster
   gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, video);
   glea.clear();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
   glea.uni('time', time * .005);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  gl.drawArrays(gl.TRIANGLES, 0, numVertices);
   requestAnimationFrame(loop);
 }
 
@@ -66,14 +69,6 @@ function loadImage(url) {
   });
 }
 
-function takeScreenshot() {
-  const { canvas } = glea;
-  const anchor = document.createElement('a');
-  anchor.setAttribute('download', 'selfie.jpg');
-  anchor.setAttribute('href', canvas.toDataURL('image/jpeg', 0.92));
-  anchor.click();
-}
-
 async function setup() {
   const { gl } = glea;
   try {
@@ -102,9 +97,11 @@ async function setup() {
   // Upload the image into the texture.
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
 
-  const saveButton = document.querySelector('button');
-  saveButton.addEventListener('click', takeScreenshot);
+  window.addEventListener('resize', () => {
+    glea.resize();
+  });
   loop(0);
 }
 
 setup();
+

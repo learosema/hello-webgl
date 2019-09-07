@@ -13,7 +13,8 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
  * [Cube](cube/)
  * [Texture mapping](texture-mapping/)
- * [Access the webcam via webgl](webcam/)
+ * [Access the webcam via webgl and apply distortions](webcam/)
+ * [Webcam Triangle Grid](webcam-triangle-grid/)
  * [Raymarching](raymarching/)
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
 
