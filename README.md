@@ -15,6 +15,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Texture mapping](texture-mapping/)
  * [Access the webcam via webgl and apply distortions](webcam/)
  * [Webcam Triangle Grid](webcam-triangle-grid/)
+ * [Webcam Triangle Grid variation with additional vertex motion](webcam-triangle-grid-2/)
  * [Raymarching](raymarching/)
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
 
