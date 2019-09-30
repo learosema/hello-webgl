@@ -124,9 +124,9 @@ vec3 hsl2rgb(vec3 hsl) {
 vec2 exponential(vec2 p) {
   vec2 x = vec2(0.0, 0.0);
   int j = 1;
-  for (int i = 0; i < 13; i++) {
-    j = j * (i + 1);
-    x = x + float(gpf(i)) * complexPow(p * 6.67, int(i + 1)) / float(j);
+  for (int i = 0; i < 17; i++) {
+    j = j * (i + 2);
+    x = x + float(gpf(i)) * complexPow(p * 7.0, int(i + 1)) / float(j);
   }
   return x;
 }
@@ -134,7 +134,7 @@ vec2 exponential(vec2 p) {
 void main () {
   vec2 p0 = rotate(coords(), time *.01);
   vec2 exp = exponential(p0) *.1;
-  vec3 col = hsl2rgb(vec3(sin(length(exp) * p0.x * p0.y + time*.1) * atan(exp.x, exp.y), 1.0, .7 - length(exp)));
+  vec3 col = hsl2rgb(vec3(sin(time*.1) * atan(exp.x, exp.y), 1.0, .7 - length(exp)));
   gl_FragColor = vec4(col, 1.0);
 }
 `
