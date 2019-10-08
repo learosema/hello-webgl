@@ -53,27 +53,25 @@ vec2 getTexCoords(vec2 position) {
 vec4 sobel(in sampler2D tex, in vec2 coord) {
   float w = 1.0 / width;
   float h = 1.0 / height;
-  vec4 n0 = texture2D(tex, coord + vec2( -w, -h));
-	vec4 n1 = texture2D(tex, coord + vec2(0.0, -h));
-	vec4 n2 = texture2D(tex, coord + vec2(  w, -h));
-	vec4 n3 = texture2D(tex, coord + vec2( -w, 0.0));
-	vec4 n4 = texture2D(tex, coord);
-	vec4 n5 = texture2D(tex, coord + vec2(  w, 0.0));
-	vec4 n6 = texture2D(tex, coord + vec2( -w, h));
-	vec4 n7 = texture2D(tex, coord + vec2(0.0, h));
-	vec4 n8 = texture2D(tex, coord + vec2(  w, h));
-	vec4 edgeH = n2 + (2.0 * n5) + n8 - (n0 + (2.0 * n3) + n6);
+  vec4 n0 = texture2D(tex, coord + vec2(-w, -h));
+  vec4 n1 = texture2D(tex, coord + vec2( 0, -h));
+  vec4 n2 = texture2D(tex, coord + vec2( w, -h));
+  vec4 n3 = texture2D(tex, coord + vec2(-w,  0));
+  vec4 n4 = texture2D(tex, coord);
+  vec4 n5 = texture2D(tex, coord + vec2( w, 0));
+  vec4 n6 = texture2D(tex, coord + vec2(-w, h));
+  vec4 n7 = texture2D(tex, coord + vec2( 0, h));
+  vec4 n8 = texture2D(tex, coord + vec2( w, h));
+  vec4 edgeH = n2 + (2.0 * n5) + n8 - (n0 + (2.0 * n3) + n6);
   vec4 edgeV = n0 + (2.0 * n1) + n2 - (n6 + (2.0 * n7) + n8);
-	vec4 sobel = sqrt((edgeH * edgeH) + (edgeV * edgeV));
+  vec4 sobel = sqrt((edgeH * edgeH) + (edgeV * edgeV));
   return sobel;
 }
-
 
 void main() {
   vec2 p = normalizeScreenCoords();
   vec2 coord = 1.0 - gl_FragCoord.xy / vec2(width, height);
   vec4 result = sobel(image, coord);
-
   gl_FragColor = vec4(1.0 - result.rgb, 1.0);
 }
 `;
