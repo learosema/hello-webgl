@@ -28,7 +28,7 @@ function loop(time) {
   const { gl } = glea;
   // Upload the image into the texture.
   // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
-  gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, video);
+  gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, video || fallbackImage);
   glea.clear();
   glea.uni('width', glea.width);
   glea.uni('height', glea.height);
