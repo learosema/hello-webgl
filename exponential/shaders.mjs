@@ -18,15 +18,6 @@ vec2 coords() {
               (gl_FragCoord.y - height * .5) / vmin);
 }
 
-/*// normalize coords and correct for aspect ratio
-vec2 normalizeScreenCoords() {
-  float aspectRatio = width / height;
-  vec2 result = 2.0 * (gl_FragCoord.xy / vec2(width, height) - 0.5);
-  result.x *= aspectRatio; 
-  return result;
-}*/
-
-
 vec2 rotate(vec2 p, float a) {
   return vec2(p.x * cos(a) - p.y * sin(a),
               p.x * sin(a) + p.y * cos(a));
@@ -61,13 +52,6 @@ int gpf(int num) {
   return result;
 }
 
-float floatGPF(float num) {
-  float n0 = float(gpf(int(abs(num))));
-  float n1 = float(gpf(int(abs(num)+1.0)));
-  float fr = fract(abs(num));
-  return mix(n0, n1, fr);
-}
-
 vec2 complexMul(vec2 a, vec2 b) {
   return vec2(a.x * b.x - a.y * b.y, a.y * b.x + a.x * b.y);
 }
@@ -82,7 +66,6 @@ vec2 complexPow(vec2 a, int n) {
   }
   return result;
 }
-
 
 // by @mattdesl
 float hue2rgb(float f1, float f2, float hue) {
@@ -120,21 +103,22 @@ vec3 hsl2rgb(vec3 hsl) {
   return rgb;
 }
 
-// exponential generating function EG(gpf; z) = Σn=1∞ gpf(n) zn / n!
+// exponential generating function EG(gpf; z) = Σn=1∞ gpf(n) z^n / (n+1)!
 vec2 exponential(vec2 p) {
   vec2 x = vec2(0.0, 0.0);
   int j = 1;
   for (int i = 0; i < 17; i++) {
     j = j * (i + 2);
-    x = x + float(gpf(i)) * complexPow(p * 7.0, int(i + 1)) / float(j);
+    x = x + float(gpf(i + 1)) * complexPow(p * 8.0, int(i + 1)) / float(j);
   }
   return x;
 }
 
 void main () {
-  vec2 p0 = rotate(coords(), time *.01);
+  vec2 p00 = coords();
+  vec2 p0 = rotate(p00, time *.01);
   vec2 exp = exponential(p0) *.1;
-  vec3 col = hsl2rgb(vec3(sin(time*.1) * atan(exp.x, exp.y), 1.0, .7 - length(exp)));
+  vec3 col = hsl2rgb(vec3(sin(p0.x + time*.1) * atan(exp.x, exp.y), 1.0, .7 - length(exp)));
   gl_FragColor = vec4(col, 1.0);
 }
 `
