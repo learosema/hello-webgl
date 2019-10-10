@@ -1,13 +1,36 @@
 body {
-	color: #fff;
+	background: #fff;
 	color: #201d1c;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 16px;
-	line-height: 1.8;
-	max-width: 1000px;
+	max-width: 800px;
 	margin: 16px auto;
 }
 
+body, body .markdown-body {
+	color: #201d1c;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 24px;
+	line-height: 1.8;
+}
+
 h1, h2, h3, h4, h5 {
-	color: #e77a22;
+	color: #27f;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #222;
+	}
+
+	body .markdown-body {
+		color: #f7f7f7;
+	}
+
+	h1, h2, h3, h4, h5 {
+		color: #4cf;
+	}
+
+	.markdown-body a {
+		color: #6ef;
+	}
+	
 }
