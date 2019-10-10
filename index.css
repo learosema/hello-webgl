@@ -2,7 +2,8 @@ body {
 	background: #fff;
 	color: #201d1c;
 	max-width: 800px;
-	margin: 16px auto;
+	margin: 0 auto;
+	padding: 16px;
 }
 
 body, body .markdown-body {
