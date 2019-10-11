@@ -19,6 +19,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Webcam Sobel edge detection](sobel-edge-detection/) ([check out the wikipedia article](https://en.wikipedia.org/wiki/Sobel_operator))
  * [Raymarching](raymarching/)
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
+ * [Rainbow fractal with complex numbers and the series of greatest prime factors](exponential/)
 
 # Running it locally
 
