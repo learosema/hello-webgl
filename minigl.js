@@ -1,5 +1,4 @@
-// glutz.js - minimal gl utils - (c)2018 Lea Rosema
-// License: WTFPL v2.0
+// minigl.js - minimal gl utils - (c) 2018 Lea Rosema
 //
 // Provides some simple helper functions for webgl.
 //
