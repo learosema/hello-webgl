@@ -37,7 +37,7 @@ float deform(vec2 p, float factor) {
 }
 
 vec4 invert(vec4 color) {
-  return vec4(1.0 - color.x, 1.0 - color.y, 1.0 - color.z, 1.0);
+  return vec4(1.0 - color.rgb, 1.0);
 }
 
 vec4 grey(vec4 color) {
@@ -72,6 +72,6 @@ void main() {
   vec2 p = normalizeScreenCoords();
   vec2 coord = 1.0 - gl_FragCoord.xy / vec2(width, height);
   vec4 result = sobel(image, coord);
-  gl_FragColor = vec4(1.0 - result.rgb, 1.0);
+  gl_FragColor = invert(result);
 }
 `;
