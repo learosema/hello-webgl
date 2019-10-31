@@ -9,6 +9,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
 # Demos
 
  * [Triangle](triangle/)
+ * [Patterns using modulo](patterns/) 
  * [Morphing Stars](morphing-stars/)
  * [Fractal](fractal/), using [Phenomenon](https://github.com/vaneenige/phenomenon/)
  * [Cube](cube/)
