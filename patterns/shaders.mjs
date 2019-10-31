@@ -4,7 +4,7 @@ const glsl = x => x;
 
 export const frag = glsl`
 precision highp float;
-#define ITERS 64
+const float PI = 3.141592654;
 
 uniform float width;
 uniform float height;
@@ -26,10 +26,18 @@ float rand() {
   return fract(sin(dot(gl_FragCoord.xy + sin(time),vec2(12.9898,78.233))) * 43758.5453);
 }
 
+vec3 palette(float x) {
+  return vec3(
+    .5 + .5 * sin(-.1 + x*PI),
+    .5 + .5 * sin(2.0 + .5 * x*PI),
+    .5 * .5 * sin(3.0 + x*PI));
+}
+
+
 void main() {
   vec2 p0 = normalizeScreenCoords();
   vec2 p = repeat(p0, vec2(0.25));
-  gl_FragColor = vec4(.5 + .5 * sin(p.x * p.y * 180.0 + time * .5), 0.0, 0.0, 1.0);
+  gl_FragColor = vec4((.75 + .25 * sin(p.x * p.y * 180.0 + time * .5)) * palette(time *.01 + .1 * p0.x * p0.y), 1.0);
 }
 `
 
