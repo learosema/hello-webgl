@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node -r esm index.test.mjs"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "webgl"
   ],
   "devDependencies": {
+    "esm": "^3.2.25",
     "express": "^4.17.1"
   }
 }
