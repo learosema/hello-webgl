@@ -1,5 +1,7 @@
 # Hello WebGL World!
 
+[![Build Status](https://travis-ci.org/terabaud/hello-webgl.svg?branch=master)](https://travis-ci.org/terabaud/hello-webgl)
+
 This [repository](https://github.com/terabaud/hello-webgl/) features my experiments with WebGL. 
 Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by myself.
 
