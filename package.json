@@ -26,5 +26,6 @@
   "devDependencies": {
     "esm": "^3.2.25",
     "express": "^4.17.1"
-  }
+  },
+  "dependencies": {}
 }
