@@ -1,4 +1,6 @@
-const glsl = x => x.trim();
+const glsl = x => {
+  return x[0].trim();
+}
 
 export const frag = glsl`
 precision highp float;

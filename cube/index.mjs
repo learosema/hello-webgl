@@ -15,13 +15,9 @@ const Color = {
 const { red, green, blue, yellow, pink, cyan } = Color;
 
 const glea = new GLea({
-  onCreate: (gl) => {
-    gl.clearColor(1/6, 1/6, 1/6, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.enable(gl.DEPTH_TEST)
-  },
   shaders: [
-    GLea.vertexShader(vert), GLea.fragmentShader(frag)
+    GLea.vertexShader(vert), 
+    GLea.fragmentShader(frag)
   ],
   buffers: {
     position: GLea.buffer(3, cube(0.25)),
@@ -40,7 +36,6 @@ window.addEventListener('resize', () => {
   glea.resize();
 });
 
-
 function loop(time) {
   const { gl } = glea;
   const { sin, cos } = Math;
@@ -52,4 +47,12 @@ function loop(time) {
   requestAnimationFrame(loop);
 }
 
-loop(0);
+function setup() {
+  const { gl } = glea;
+  gl.clearColor(1/6, 1/6, 1/6, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST)
+  loop(0);
+}
+
+setup();

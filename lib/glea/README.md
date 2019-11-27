@@ -8,10 +8,6 @@ Glea.js is a WebGL library with a minimal footprint in modern modular JavaScript
 import GLea from '../lib/glea/glea.mjs';
 
 const glea = new GLea({
-  /*onCreate: gl => {
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthFunc(gl.LEQUAL);
-  }, */
   shaders: [
     GLea.fragmentShader(frag),
     GLea.vertexShader(vert)
@@ -24,9 +20,11 @@ const glea = new GLea({
 
 ### Options
 
+- `canvas`: optional, if not specified, `document.querySelector('canvas')` is used
+- `gl`: optional, if not specified, canvas.getContext(contextType) is used
+- `contextType`: optional, default `webgl` (or experimental-webgl, you don't need to prefix yourself)
 - `shaders`: array that takes a fragmentShader and a vertexShader in the above form
 - `buffers`: an object with attributes and buffers. You can access the buffers via an attribute named as the Object keys.
-- `onCreate`: callback after creation. **(deprecated: I think it can be removed)**
 
 ### Properties
 
