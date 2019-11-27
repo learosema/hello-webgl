@@ -21,8 +21,9 @@ const glea = new GLea({
 ### Options
 
 - `canvas`: optional, if not specified, `document.querySelector('canvas')` is used
-- `gl`: optional, if not specified, canvas.getContext(contextType) is used
-- `contextType`: optional, default `webgl` (or experimental-webgl, you don't need to prefix yourself)
+- `gl`: optional, if not specified, `canvas.getContext(contextType)` is used
+- `contextType`: optional, default `webgl` (or `experimental-webgl`, you don't need to prefix it yourself)
+- `glOptions`: additional options to pass to `canvas.getContext`
 - `shaders`: array that takes a fragmentShader and a vertexShader in the above form
 - `buffers`: an object with attributes and buffers. You can access the buffers via an attribute named as the Object keys.
 
