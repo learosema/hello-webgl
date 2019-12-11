@@ -45,4 +45,4 @@ The older demos use an esoteric coding style library I wrote in the 2015s. It pr
 * [3D Cube](hello-3d.html)
 * [Shapes](shapes.html)
 * [Multiple Shaders](multiple-shaders.html)
-* [Relaxing Cubes](relaxing-cubes)
+* [Relaxing Cubes](relaxing-cubes.html)

@@ -1,7 +1,7 @@
 <body style=background-color:#000;overflow:hidden;margin:0>
 <canvas id=a style=display:block;width:100%;height:100%></canvas>
 <script id=fs2 type=x-shader/x-fragment>
-precision mediump float;
+precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
@@ -12,13 +12,13 @@ void main() {
 	//gl_FragColor = vec4(1.0,1.0,1.0, 1.0);
 	vec2 p = (gl_FragCoord.xy / resolution) - vec2(0.5,0.5);
 	vec4 P = vM * vpos;
-	float l1 = distance(vec4(p,0.0,1.0),P);
-	float l2 = distance(vec4(p+vec2(sin(time),cos(time)),0.0,1.0),P);
-	gl_FragColor = (1.0 - vec4(sin(time),0.5+sin(time+1.0)*cos(time)*0.4,cos(time),1.0)*abs(sin((l1+l2)*0.4))*1.0);
+	float l1 = distance(vec3(p, 0.0),P.xyz);
+	float l2 = distance(vec3(p + vec2(sin(time), cos(time)), 0.0), P.xyz);
+	gl_FragColor = vec4(vec3(.5 + sin(time * 10.5 + .2), 0.5+sin(time+1.0) * cos(time)*0.4, .5 + cos(time)) * abs(sin((l1 + l2) * 0.4)), 1.0);
 }
 </script>
 <script id=vs2 type=x-shader/x-vertex>
-precision mediump float;
+precision highp float;
 
 attribute vec4 pos;
 
@@ -32,7 +32,7 @@ void main() {
 }
 </script>
 <script id=fs1 type=x-shader/x-fragment>
-precision mediump float;
+precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
@@ -43,11 +43,11 @@ void main() {
 	uv.x=(uv.x-0.5)+cos(time/2.0)*1.2;
 	uv.y=(uv.y-0.5)+sin(time/2.0)*0.8;
 	float l = 1.0*sin(time+sin((uv.x+sin(uv.y)*sin(uv.x+time)*0.5)*3.0*uv.y)*uv.y*(1.2));
-  	gl_FragColor = 0.3 - 0.3*vec4( vec3( l*sin(time), 0.2+0.2*l*sin(time+1.0)*cos(time), l*cos(time)), 1.0 );	
+  	gl_FragColor = vec4(0.5 * vec3( l*sin(time), 0.2+0.2*l*sin(time+1.0)*cos(time), l*cos(time)), 1.0 );	
 }
 </script>
 <script id=vs1 type=x-shader/x-vertex>
-precision mediump float;
+precision highp float;
 attribute vec4 pos;
 uniform mat4 M;
 void main(){
