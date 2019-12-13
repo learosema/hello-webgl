@@ -41,8 +41,10 @@ function loadImage(src) {
 async function setup() {
   const { gl } = glea;
   // todo: wie ging das nochmal? await Promise.all ?
-  const image1 = await loadImage('modv.jpg');
-  const image2 = await loadImage('vizra.jpg');
+  const [image1, image2] = await Promise.all([
+    loadImage('modv.jpg'),
+    loadImage('vizra.jpg')
+  ]);
 
   texture1 = glea.createTexture(0);
   // Upload the image into the texture. (todo: maybe integrate that into glea.createTexture)
