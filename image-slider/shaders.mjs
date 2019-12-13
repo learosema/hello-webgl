@@ -42,6 +42,6 @@ void main() {
   vec2 texCoords = vec2(gl_FragCoord.x / width, 1.0 - (gl_FragCoord.y / height)); 
   vec4 tex1Color = texture2D(texture1, texCoords);  
   vec4 tex2Color = texture2D(texture2, texCoords);
-  gl_FragColor = mix(tex1Color, tex2Color, .5 + .5 * sin(time + p.x * p.y * 12.0));
+  gl_FragColor = mix(tex1Color, tex2Color, .5 + .5 * sin(time * .25 + p.x * p.y * 6.0));
 }
 `;
