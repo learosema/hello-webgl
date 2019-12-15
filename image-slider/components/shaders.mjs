@@ -48,7 +48,7 @@ void main() {
   vec2 p = normalizeScreenCoords();
   float x = .5 + .5 * sin(time * .25);
   float y = 1.0 - x;
-  float deform = rand() * sin(time * 1.2 + p.x * 17.0 - p.y * sin(p.x * 4.0) * 13.0) * .02;
+  float deform = rand() * .04 + sin(time * 1.2 + p.x * 11.0 - p.y * sin(p.x * 2.0) * 13.0) * .01;
   vec2 texCoords = vec2(gl_FragCoord.x / width, 1.0 - (gl_FragCoord.y / height)); 
   vec4 tex1Color = texture2D(texture1, texCoords + x * deform);  
   vec4 tex2Color = texture2D(texture2, texCoords + y * deform);
