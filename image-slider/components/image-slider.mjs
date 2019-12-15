@@ -1,9 +1,6 @@
 import GLea from '../../lib/glea/glea.mjs';
 import { frag, vert } from './shaders.mjs';
 
-// syntax highlighting via the lit-html vscode extension
-const html = x => x;
-
 export default class ImageSlider extends HTMLElement {
 
   constructor() {
@@ -31,15 +28,22 @@ export default class ImageSlider extends HTMLElement {
     }));
   }
 
+  async loadCss() {
+    const cssResponse = await fetch('./components/image-slider.css');
+    const css = await cssResponse.text();
+    return css;
+  }
+
+
   async connectedCallback() {
     if (! this.initialized) {
       this.initialized = true;
+      this.css = await this.loadCss();
       this.render();
       this.canvas = this.shadowRoot.querySelector('canvas');
       this.prevButton = this.shadowRoot.querySelector('.button--prev');
       this.nextButton = this.shadowRoot.querySelector('.button--next');
       this.images = await this.loadImages();
-      console.log(this.images);
       this.initWebGL();
     }
   }
@@ -93,8 +97,10 @@ export default class ImageSlider extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = html`
-      <link rel="stylesheet" href="./components/image-slider.css">
+    const { css } = this;
+    
+    this.shadowRoot.innerHTML = `
+      <style>${css}</style>
       <canvas></canvas>
       <button class="button--prev"> previous </button>
       <button class="button--next"> next </button>

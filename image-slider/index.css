@@ -4,5 +4,29 @@ body {
 }
 
 image-slider:not(:defined) {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;  
+}
+
+image-slider:not(:defined) ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+image-slider:not(:defined) ul li {
+  margin: 0;
+  padding: 0;
+}
+
+image-slider:not(:defined) ul li img {
+  display: block;
+  width: 100vmin;
+  height: 100vmin;
+}
+
+image-slider:not(:defined) ul li:not(:first-child) {
   display: none;
 }
