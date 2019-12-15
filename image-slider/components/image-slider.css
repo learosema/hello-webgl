@@ -6,6 +6,10 @@
   display: none;
 }
 
+:host:defined * {
+  display: none;
+}
+
 :host {
   display: flex;
   width: 100vw;
@@ -23,5 +27,9 @@ canvas {
 }
 
 button {
+  display: none;
+}
+
+::slotted(*) {
   display: none;
 }

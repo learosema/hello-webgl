@@ -8,6 +8,7 @@ export default class ImageSlider extends HTMLElement {
 
   constructor() {
     super();
+    this.imageContainer = this.querySelector('[slot]');
     this.animationLoop = this.animationLoop.bind(this);
     this.attachShadow({ mode: 'open' });
     this.initialized = false;
@@ -18,8 +19,7 @@ export default class ImageSlider extends HTMLElement {
   }
 
   async loadImages() {
-    const imgs = [...this.querySelectorAll('img')];
-    console.log(imgs);
+    const imgs = [...this.imageContainer.querySelectorAll('img')];
     return await Promise.all(imgs.map(img => {
       return new Promise((resolve, reject) => {
         const image = new Image();
