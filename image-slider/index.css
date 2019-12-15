@@ -2,8 +2,10 @@ body {
   margin: 0;
 }
 
-canvas {
-  display: block;
-  width: 100vw;
-  height: 100vh; 
+image-slider:not(:defined) {
+  display: none;
+}
+
+image-slider:defined * {
+  display: none;
 }

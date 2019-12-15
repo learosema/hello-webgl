@@ -1,0 +1,27 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  
+  background: #000;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  margin: auto;
+  width: 100vmin;
+  height: 100vmin;
+}
+
+button {
+  display: none;
+}

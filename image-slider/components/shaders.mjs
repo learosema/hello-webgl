@@ -1,5 +1,5 @@
 // for syntax highlighting (glsl-literal extension)
-const glsl = x => x;
+const glsl = x => x[0].trim();
 
 export const vert = glsl`
 precision highp float;
@@ -46,9 +46,9 @@ float rand() {
 
 void main() {
   vec2 p = normalizeScreenCoords();
-  float x = .5 + .5 * sin(time * .5);
+  float x = .5 + .5 * sin(time * .25);
   float y = 1.0 - x;
-  float deform = rand() * sin(time * 1.2 + p.x * 17.0 - p.y * 23.0) * .01;
+  float deform = rand() * sin(time * 1.2 + p.x * 17.0 - p.y * sin(p.x * 4.0) * 13.0) * .02;
   vec2 texCoords = vec2(gl_FragCoord.x / width, 1.0 - (gl_FragCoord.y / height)); 
   vec4 tex1Color = texture2D(texture1, texCoords + x * deform);  
   vec4 tex2Color = texture2D(texture2, texCoords + y * deform);
