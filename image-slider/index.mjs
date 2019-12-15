@@ -56,6 +56,9 @@ async function setup() {
   glea.uniI('texture1', 0);
   glea.uniI('texture2', 1);
 
+  glea.uniIV('textureSize1', [image1.width, image1.height]);
+  glea.uniIV('textureSize2', [image2.width, image2.height]);
+
   window.addEventListener('resize', () => {
     glea.resize();
   });
