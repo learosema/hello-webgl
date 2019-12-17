@@ -9,10 +9,53 @@ export default class ImageSlider extends HTMLElement {
     this.animationLoop = this.animationLoop.bind(this);
     this.attachShadow({ mode: 'open' });
     this.initialized = false;
+    this.prevIndex = 1;
+    this.indexChangedTime = 0;
   }
 
   static register() {
     customElements.define('image-slider', ImageSlider);
+  }
+
+  static get observedAttributes() {
+    return ['index'];
+  }
+
+  get index() {
+    if (this.hasAttribute('index')) {
+      const imageIndex = parseInt(this.getAttribute('index') || '1', 10);
+      return isNaN(imageIndex) ? 1 : imageIndex;
+    }
+    return null;
+  }
+
+  set index(value) {
+    if (value === null || typeof value === 'undefined') {
+      this.removeAttribute('index');
+      return;
+    }
+    if (typeof value !== 'number') {
+      value = parseInt(value, 10);
+      if (isNaN(value)) {
+        value = 1;
+      }
+    }
+    this.setAttribute('index', value.toString(10));
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'index') {
+      // keep track of the time the index is changed
+      // so we can pass it to the shader
+      this.indexChangedTime = performance.now();
+      const prev = parseInt(oldValue || '1', 10);
+      this.prevIndex = isNaN(prev) ? 1 : prev; 
+      this.updateTextures();
+    }
+  }
+
+  updateTextures() {
+    // TODO...
   }
 
   async loadImages() {
@@ -33,7 +76,6 @@ export default class ImageSlider extends HTMLElement {
     const css = await cssResponse.text();
     return css;
   }
-
 
   async connectedCallback() {
     if (! this.initialized) {

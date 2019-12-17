@@ -3,6 +3,12 @@ body {
   background: #000;
 }
 
+/** 
+ * the cool thing about Web components is that
+ * we can provide a fully functional no-js fallback of the component
+ * via the `:not(:defined)` selector. 
+ */
+
 image-slider:not(:defined) {
   display: flex;
   height: 100vh;
@@ -27,6 +33,46 @@ image-slider:not(:defined) ul li img {
   height: 100vmin;
 }
 
-image-slider:not(:defined) ul li:not(:first-child) {
+image-slider:not([index]):not(:defined) ul li:not(:first-child) {
+  display: none;
+}
+
+image-slider[index=1]:not(:defined) ul li:not(:nth-child(1)) {
+  display: none;
+}
+
+image-slider[index=2]:not(:defined) ul li:not(:nth-child(2)) {
+  display: none;
+}
+
+image-slider[index=3]:not(:defined) ul li:not(:nth-child(3)) {
+  display: none;
+}
+
+image-slider[index=4]:not(:defined) ul li:not(:nth-child(1)) {
+  display: none;
+}
+
+image-slider[index=5]:not(:defined) ul li:not(:nth-child(4)) {
+  display: none;
+}
+
+image-slider[index=6]:not(:defined) ul li:not(:nth-child(5)) {
+  display: none;
+}
+
+image-slider[index=7]:not(:defined) ul li:not(:nth-child(6)) {
+  display: none;
+}
+
+image-slider[index=7]:not(:defined) ul li:not(:nth-child(7)) {
+  display: none;
+}
+
+image-slider[index=8]:not(:defined) ul li:not(:nth-child(8)) {
+  display: none;
+}
+
+image-slider[index=9]:not(:defined) ul li:not(:nth-child(9)) {
   display: none;
 }
