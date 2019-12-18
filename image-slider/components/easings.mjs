@@ -8,7 +8,7 @@
 /**
  * no easing, no acceleration
  * 
- * @param {Number} t time
+ * @param {number} t time
  */
 export function linear(t) {
   return t;
@@ -17,7 +17,7 @@ export function linear(t) {
 /**
  * accelerating from zero velocity
  * 
- * @param {Number} t time 
+ * @param {number} t time 
  */
 export function easeInQuad(t) {
   return t * t;
