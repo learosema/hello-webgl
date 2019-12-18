@@ -29,6 +29,9 @@ function nextImage() {
 }
 
 window.addEventListener('keyup', (e) => {
+  if (imageSlider.fading === true) {
+    return;
+  }
   if (e.keyCode === 37) {
     prevImage();
   }

@@ -15,6 +15,7 @@ export default class ImageSlider extends HTMLElement {
 
   constructor() {
     super();
+    this._animationDelay = 1000;
     this.imageContainer = this.querySelector('[slot]');
     this.animationLoop = this.animationLoop.bind(this);
     this.onContextLost = this.onContextLost.bind(this);
@@ -38,7 +39,11 @@ export default class ImageSlider extends HTMLElement {
    * @returns {string[]}
    */
   static get observedAttributes() {
-    return ['index', 'autoplay'];
+    return ['index', 'autoplay', 'animation-delay'];
+  }
+
+  get animationDelay() {
+    return _animationDelay;
   }
 
   /**
@@ -102,6 +107,10 @@ export default class ImageSlider extends HTMLElement {
       const prev = parseInt(oldValue || '1', 10);
       this.prevIndex = isNaN(prev) ? 1 : prev; 
       this.updateTextures();
+    }
+    if (name === 'animation-delay') {
+      const returnValue = parseInt(newValue, 10);
+      this._animationDelay = isNaN(returnValue) ? 1000 : returnValue;
     }
   }
 
@@ -219,16 +228,24 @@ export default class ImageSlider extends HTMLElement {
     }
   }
 
+  get fading() {
+    if (this.sameTextures) return false;
+    return performance.now() - this.indexChangedTime < this._animationDelay;
+  }
+
   animationLoop(time = 0) {
     const { glea } = this;
     const { gl } = glea;
-    glea.clear();
-    glea.uni('width', glea.width);
-    glea.uni('height', glea.height);
-    glea.uni('time', time * .005);
-    glea.uni('animationStep', this.sameTextures ? 0 : 
-     easeInOutCubic(clamp((performance.now() - this.indexChangedTime) / 1000, 0, 1)));
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    const animationTime = (performance.now() - this.indexChangedTime) / this._animationDelay;
+    if (animationTime <= 1) {
+      const animationStep = this.sameTextures ? 0 : easeInOutCubic(clamp(animationTime, 0, 1));
+      glea.clear();
+      glea.uni('width', glea.width);
+      glea.uni('height', glea.height);
+      glea.uni('time', time * .005);
+      glea.uni('animationStep', animationStep);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
     this.frame = requestAnimationFrame(this.animationLoop);
   }
 
