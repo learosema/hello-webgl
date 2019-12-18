@@ -31,7 +31,11 @@ export default class ImageSlider extends HTMLElement {
    * @returns {void}
    */
   static register() {
-    customElements.define('image-slider', ImageSlider);
+    try {
+      customElements.define('image-slider', ImageSlider);
+    } catch (ex) {
+      console.error('Custom elements are not supported.')
+    }
   }
 
   /**
