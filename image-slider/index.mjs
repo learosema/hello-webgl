@@ -27,16 +27,19 @@ function prevImage() {
   const currentIndex = parseInt(imageSlider.getAttribute('index'), 10) || 1;
   const numImages = [...imageSlider.querySelectorAll('img')].length;
   const newIndex = (currentIndex > 1) ? (currentIndex-1) : numImages;
-  document.querySelector('#image' + newIndex).classList.add('active');
-  
+  document.querySelector(`[href="#image${newIndex}"]`).classList.add('active');
   imageSlider.setAttribute('index', newIndex);
 }
 
 function nextImage() {
+  const active = nav.querySelector('.active');
+  if (active) {
+    active.classList.remove('active');
+  }
   const currentIndex = parseInt(imageSlider.getAttribute('index'), 10) || 1;
   const numImages = [...imageSlider.querySelectorAll('img')].length;
   const newIndex = (currentIndex < numImages) ? (currentIndex + 1) : 1;
-  document.querySelector('#image' + newIndex).classList.add('active');
+  document.querySelector(`[href="#image${newIndex}"]`).classList.add('active');
   imageSlider.setAttribute('index', newIndex);
 }
 
