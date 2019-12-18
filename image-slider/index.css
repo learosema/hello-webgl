@@ -33,46 +33,16 @@ image-slider:not(:defined) ul li img {
   height: 100vmin;
 }
 
-image-slider:not([index]):not(:defined) ul li:not(:first-child) {
-  display: none;
-}
 
-image-slider[index=1]:not(:defined) ul li:not(:nth-child(1)) {
-  display: none;
-}
-
-image-slider[index=2]:not(:defined) ul li:not(:nth-child(2)) {
-  display: none;
-}
-
-image-slider[index=3]:not(:defined) ul li:not(:nth-child(3)) {
-  display: none;
-}
-
-image-slider[index=4]:not(:defined) ul li:not(:nth-child(1)) {
-  display: none;
-}
-
-image-slider[index=5]:not(:defined) ul li:not(:nth-child(4)) {
-  display: none;
-}
-
-image-slider[index=6]:not(:defined) ul li:not(:nth-child(5)) {
-  display: none;
-}
-
-image-slider[index=7]:not(:defined) ul li:not(:nth-child(6)) {
-  display: none;
-}
-
-image-slider[index=7]:not(:defined) ul li:not(:nth-child(7)) {
-  display: none;
-}
-
-image-slider[index=8]:not(:defined) ul li:not(:nth-child(8)) {
-  display: none;
-}
-
-image-slider[index=9]:not(:defined) ul li:not(:nth-child(9)) {
+image-slider:not([index]):not(:defined) ul li:not(:first-child),
+image-slider[index="1"]:not(:defined) ul li:not(:nth-child(1)), 
+image-slider[index="2"]:not(:defined) ul li:not(:nth-child(2)),
+image-slider[index="3"]:not(:defined) ul li:not(:nth-child(3)),
+image-slider[index="4"]:not(:defined) ul li:not(:nth-child(4)),
+image-slider[index="5"]:not(:defined) ul li:not(:nth-child(5)),
+image-slider[index="6"]:not(:defined) ul li:not(:nth-child(6)),
+image-slider[index="7"]:not(:defined) ul li:not(:nth-child(7)),
+image-slider[index="8"]:not(:defined) ul li:not(:nth-child(8)),
+image-slider[index="9"]:not(:defined) ul li:not(:nth-child(9)) {
   display: none;
 }
