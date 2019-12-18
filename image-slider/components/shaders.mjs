@@ -21,6 +21,8 @@ uniform float width;
 uniform float height;
 uniform float time;
 
+uniform float animationStep;
+
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 
@@ -46,7 +48,8 @@ float rand() {
 
 void main() {
   vec2 p = normalizeScreenCoords();
-  float x = .5 + .5 * sin(time * .25);
+  // float x = .5 + .5 * sin(time * .25);
+  float x = clamp(animationStep, 0.0, 1.0);
   float y = 1.0 - x;
   float deform = rand() * .04 + sin(time * 1.2 + p.x * 11.0 - p.y * sin(p.x * 2.0) * 13.0) * .01;
   vec2 texCoords = vec2(gl_FragCoord.x / width, 1.0 - (gl_FragCoord.y / height)); 
