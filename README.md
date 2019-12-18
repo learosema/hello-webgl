@@ -24,6 +24,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
  * [Shape morphing 3D geometries via glsl mix](shape-morph-3d/)
  * [Rainbow fractal with complex numbers and the series of greatest prime factors](exponential/)
+ * [Image Slider component](image-slider/)
 
 # Running it locally
 
