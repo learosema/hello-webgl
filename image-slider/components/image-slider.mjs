@@ -124,7 +124,7 @@ export default class ImageSlider extends HTMLElement {
    */
   async loadImages() {
     const imgs = [...this.imageContainer.querySelectorAll('img')];
-    return await Promise.all(imgs.map(img => {
+    const returnValue = await Promise.all(imgs.map(img => {
       return new Promise((resolve, reject) => {
         const image = new Image();
         image.crossOrigin = 'anonymous';
@@ -133,6 +133,8 @@ export default class ImageSlider extends HTMLElement {
         image.onerror = reject;
       })
     }));
+    this.indexChangedTime = performance.now();
+    return returnValue;
   }
 
   /**
