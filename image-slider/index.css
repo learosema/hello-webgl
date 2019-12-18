@@ -82,12 +82,20 @@ nav ul li a {
   font-variant-numeric: tabular-nums;
   display: block;
   padding: 8px;
-  width: 32px;
+  width: 40px;
   font-size: 16px;
-  background: #26f;
+  border: 2px solid #fff;
+  background: #127;
   text-align: center;
   border-radius: 50%;
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+}
+
+nav ul li a.active {
+  background: #fff;
+  color: #127;
+  border: 2px solid #fff;
+  
 }
