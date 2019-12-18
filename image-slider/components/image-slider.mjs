@@ -9,6 +9,10 @@ import { frag, vert } from './shaders.mjs';
  * @param {number} max maximum value
  */
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+/**
+ * Identity function for html-literal (use with lit-html vscode extension)
+ */
 const html = x => x;
 
 export default class ImageSlider extends HTMLElement {
@@ -95,6 +99,16 @@ export default class ImageSlider extends HTMLElement {
     }
     this.setAttribute('index', value.toString(10));
   }
+
+  /**
+   * get fading state
+   * @returns {boolean} true if fading
+   */  
+  get fading() {
+    if (this.sameTextures) return false;
+    return performance.now() - this.indexChangedTime < this._animationDelay;
+  }
+
 
   /**
    * Called when an attribute is changed
@@ -214,7 +228,9 @@ export default class ImageSlider extends HTMLElement {
     this.animationLoop();
   }
 
-
+  /**
+   * upload images to WebGL textures
+   */
   updateTextures() {
     const { glea, images, index, prevIndex } = this;
     const { gl } = glea;
@@ -234,11 +250,10 @@ export default class ImageSlider extends HTMLElement {
     }
   }
 
-  get fading() {
-    if (this.sameTextures) return false;
-    return performance.now() - this.indexChangedTime < this._animationDelay;
-  }
-
+  /**
+   * Animation loop
+   * @param {number} time something like performance.now() 
+   */
   animationLoop(time = 0) {
     const { glea } = this;
     const { gl } = glea;
@@ -255,11 +270,19 @@ export default class ImageSlider extends HTMLElement {
     this.frame = requestAnimationFrame(this.animationLoop);
   }
 
+  /**
+   * ContextLost event
+   * 
+   * @param {WebGLContextEvent} e 
+   */
   onContextLost(e) {
     e.preventDefault();
     cancelAnimationFrame(this.frame);
   }
 
+  /**
+   * ContextRestored event
+   */
   onContextRestored() {
     this.initWebGL();
   }
