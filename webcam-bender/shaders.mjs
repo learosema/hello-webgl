@@ -33,7 +33,7 @@ vec2 normalizeScreenCoords()
 }
 
 float deform(vec2 p) {
-  return length(p) * sin(time) * .25;
+  return length(p) * (.125 + sin(time) * .125);
 }
 
 vec4 invert(vec4 color) {
