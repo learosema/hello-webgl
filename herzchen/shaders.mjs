@@ -68,7 +68,7 @@ vec3 shade(in vec2 p)
   col = mix(col, col*1.0-exp(-10.0 * abs(sdf)), 0.4);
   
   // repeating lines
-  col *= 0.8 + 0.2*cos(4.0*sdf - time * .5);
+  col *= 0.8 + 0.1*cos(8.0*sdf - time * .2);
   return col;
 }
 
@@ -76,7 +76,7 @@ vec3 shade(in vec2 p)
 void main () {
   vec2 p0 = coords();
   float zoom = 30.0 + sin(time * .5)*5.0;
-  vec2 p1 = rotate(p0 * zoom, time * .01);
+  vec2 p1 = rotate(p0 * zoom, sin(time * .05) * 2.0 * PI);
   vec3 col = shade(p1);
   gl_FragColor = vec4(col, 1.0);
 }
