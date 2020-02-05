@@ -46,9 +46,10 @@ float sdHeart(in vec2 p, float s) {
 
 float distanceField(vec2 p) {
   float d = 10000.0; 
-  for (int i = 0; i < 10; i++) {
-    vec2 point = vec2(cos(time *.1 + float(i) * .5) * 12.0, sin(time *.3 + float(i) * .5) * 13.0);
-    d = min(d, sdHeart(p - point, 3.5));
+  for (int i = 0; i < 30; i++) {
+    vec2 motion = vec2(cos(float(i) + time * .2), sin(float(i) + time * .3)) * (3.0);
+    vec2 point = vec2(cos(float(i) * 3.0) * 10.0, sin(float(i) * 7.0) * 10.0) + motion;
+    d = min(d, sdHeart(p - point, 1.0 + sin(float(i) + time) *.2));
   }
   return d;
 }
@@ -68,15 +69,15 @@ vec3 shade(in vec2 p)
   col = mix(col, col*1.0-exp(-10.0 * abs(sdf)), 0.4);
   
   // repeating lines
-  col *= 0.8 + 0.1*cos(8.0*sdf - time * .2);
+  col *= 0.8 + 0.1*cos(2.0*sdf - time * .2);
   return col;
 }
 
 
 void main () {
   vec2 p0 = coords();
-  float zoom = 30.0 + sin(time * .5)*5.0;
-  vec2 p1 = rotate(p0 * zoom, sin(time * .05) * 2.0 * PI);
+  float zoom = 25.0 + sin(time * .05)*5.0;
+  vec2 p1 = p0 * zoom;
   vec3 col = shade(p1);
   gl_FragColor = vec4(col, 1.0);
 }
