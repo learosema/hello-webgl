@@ -69,7 +69,7 @@ vec3 shade(in vec2 p)
   col = mix(col, col*1.0-exp(-10.0 * abs(sdf)), 0.4);
   
   // repeating lines
-  col *= 0.8 + 0.1*cos(2.0*sdf - time * .2);
+  col *= 0.8 + 0.1*cos(.5*sdf - time);
   return col;
 }
 
