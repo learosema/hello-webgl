@@ -33,7 +33,7 @@ vec2 normalizeScreenCoords()
 }
 
 float deform(vec2 p) {
-  return length(p) * (.125 + sin(time) * .125);
+  return (1.0 - sqrt(p.x * p.x + p.y * p.y)) * (.125 + sin(time * .1) * .125);
 }
 
 vec4 invert(vec4 color) {
@@ -43,8 +43,7 @@ vec4 invert(vec4 color) {
 void main() {
   vec2 p = normalizeScreenCoords();
   vec2 texCoords = 1.0 - gl_FragCoord.xy / vec2(width, height);
-  vec4 texColor = texture2D(image, texCoords * (1.0 + deform(p)));
-  gl_FragColor = texColor;
-  // vec4(1.0, 0, 0, 1.0);
+  vec4 texColor = texture2D(image, texCoords);
+  gl_FragColor = invert(texColor);
 }
 `;
