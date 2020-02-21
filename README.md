@@ -20,6 +20,7 @@ Most demos are using [GLea](lib/glea/), a minimalistic WebGL library written by 
  * [Webcam Triangle Grid](webcam-triangle-grid/)
  * [Webcam Triangle Grid variation with additional vertex motion](webcam-triangle-grid-2/)
  * [Webcam Sobel edge detection](sobel-edge-detection/) ([check out the wikipedia article](https://en.wikipedia.org/wiki/Sobel_operator))
+ * [Webcam ordered dithering](dither-cam/) ([wikipedia](https://en.wikipedia.org/wiki/Ordered_dithering))
  * [Raymarching](raymarching/)
  * [Infinite rocks (raymarching with shadows)](raymarching-shadows/)
  * [Shape morphing 3D geometries via glsl mix](shape-morph-3d/)
