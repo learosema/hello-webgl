@@ -1,5 +1,7 @@
 # Creative Coding with WebGL
------------------------------------------------
+
+---
+
 # Creative Coding with WebGL
 
 ![Lea Rosema](https://avatars0.githubusercontent.com/u/949950?s=460&v=4)
@@ -10,14 +12,16 @@ Junior Frontend Developer
 
 SinnerSchrader
 
--------------------------------------------------
+---
+
 # What is WebGL?
 
 - it's not a 3D engine
 - it's about drawing points, lines, triangles
 - it's a low-level API to run code on the GPU
 
--------------------------------------------------
+---
+
 # Shaders
 
 ![A triangle](tri.png)
@@ -28,8 +32,8 @@ The vertex shader computes vertex positions
 
 The fragment Shader handles rasterization
 
+---
 
--------------------------------------------------
 # GL Shader Language
 
 ## How does it look like?
@@ -38,7 +42,8 @@ The fragment Shader handles rasterization
 - It's like C++ with a `void main()`
 - ...but with built-in datatypes and functions useful for 2D/3D
 
-----------------------------------------------------
+---
+
 # Vertex shader code
 
 ```glsl
@@ -53,7 +58,8 @@ void main() {
 - the shader is run for each position in the position buffer
 - the vertex position is set via `gl_Position`
 
-----------------------------------------------------
+---
+
 # Fragment shader code
 
 ```glsl
@@ -64,25 +70,27 @@ void main() {
   gl_FragColor = vec4(1.0, 0.5, 0, 1.0);
 }
 ```
+
 - The fragment shader is run for each fragment (pixel)
 - the pixel coordinate can be read from `gl_FragCoord`
 - the output color is set in `gl_FragColor`
 
--------------------------------------------------
+---
+
 # Passing Data from JS
 
 - `attribute`: the vertex shader pulls a value from a buffer and stores it in here
 - `uniform`: pass variables you set in JS before you execute the shader
 - `varying`: pass values from the vertex to the fragment shader
 
-
--------------------------------------------------
+---
 
 # Let's try GLSL
 
 ## [DEMO: Draw a triangle](https://codepen.io/terabaud/pen/OKVpYV?editors=0010)
 
--------------------------------------------------
+---
+
 # GL Shader Language
 
 ## Datatypes
@@ -92,8 +100,10 @@ void main() {
 - matrices (`mat2`, `mat3`, `mat4`)
 - texture data (`sampler2D`)
 
----------------------------------------------------
+---
+
 # GL Shader Language
+
 ## Cool built-in functions
 
 - `sin`, `cos`, `atan`
@@ -101,17 +111,20 @@ void main() {
 - Vector arithmetics (`+`, `-`, `*`, `/`, `dot`, `cross`, `length`)
 - Matrix arithmetics (`+`, `-`, `*`)
 
-----------------------------------------------------
+---
+
 # Running it in JS
 
 ## Get the WebGL Context
 
 ```js
-const gl = canvas.getContext('webgl')
+const gl = canvas.getContext("webgl");
 ```
+
 ...just like initializing a 2D canvas
 
-----------------------------------------------------
+---
+
 # Running it in JS
 
 ## Compile the Shaders
@@ -119,60 +132,63 @@ const gl = canvas.getContext('webgl')
 ```js
 const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 gl.shaderSource(fragmentShader, fragmentCode);
-gl.compileShader();
+gl.compileShader(fragmentShader);
 
 const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-gl.shaderSource(fragmentShader, vertexCode);
-gl.compileShader();
+gl.shaderSource(vertexShader, vertexCode);
+gl.compileShader(vertexShader);
 ```
 
 Like in C++, you have to compile your shaders first.
 
------------------------------------------------------
+---
+
 # Running it in JS
 
 ## Create the program
 
 ```js
 const program = gl.createProgram();
-program.attachShader(vertexShader);
-program.attachShader(fragmentShader);
-program.linkProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram();
 ```
 
 Also like in C++, the two shaders are linked into a `WebGLProgram`.
 
 You can check if the program is valid via `program.validateProgram()`
 
-------------------------------------------------------
+---
+
 # Running it in JS
 
 ## Defining attributes for the vertex shader
 
 ```js
-const positionLoc = this.gl.getAttribLocation(program, 'position');
+const positionLoc = this.gl.getAttribLocation(program, "position");
 this.gl.enableVertexAttribArray(positionLoc);
 ```
 
 Activate your attribute via `enableVertexAttribArray`
 
-------------------------------------------------------
+---
+
 # Running it in JS
 
 ## Assign a buffer to the attribute
 
 ```js
 // provide 2D data for a triangle
-const data = [-1, -1,  -1,  1,  1, -1];
+const data = [-1, -1, -1, 1, 1, -1];
 const buffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-gl.bufferData(gl.ARRAY_BUFFER,
-  new Float32Array(data), gl.STATIC_DRAW);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
 ```
 
 Create a buffer and provide data in a `Float32Array`
 
------------------------------------------------------
+---
+
 # Running it in JS
 
 ## Set the attribute pointer
@@ -183,31 +199,41 @@ const stride = 0; // 0 = advance through the buffer by recordSize * sizeof(data 
 const offset = 0; // the starting point in the buffer
 const type = gl.FLOAT; // data type
 const normalized = false; // normalize the data (unused for gl.FLOAT)
-gl.vertexAttribPointer(positionLoc, recordSize, type, normalized, stride, offset);
+gl.vertexAttribPointer(
+  positionLoc,
+  recordSize,
+  type,
+  normalized,
+  stride,
+  offset
+);
 ```
 
 Assign an attribute to a buffer
 
------------------------------------------------------
+---
+
 # Running it in JS
 
 ## Passing uniform variables
 
 ```js
-const uTime = gl.getUniformLocation(program, 'time');
-gl.uniform1f(loc, tickCount);
+const uTime = gl.getUniformLocation(program, "time");
+gl.uniform1f(uTime, tickCount);
 ```
-* Possible types: floats, ints, bools, vectors, matrices
-* Pass variables from JavaScript to WebGL
-* For example: pass the screen resolution, elapsed time, mouse position
 
-------------------------------------------------------
+- Possible types: floats, ints, bools, vectors, matrices
+- Pass variables from JavaScript to WebGL
+- For example: pass the screen resolution, elapsed time, mouse position
+
+---
+
 # Running it in JS
 
 ## Draw
-```js
 
-createBuffers()
+```js
+createBuffers();
 setAttributes();
 
 function animLoop(time = 0) {
@@ -219,7 +245,8 @@ function animLoop(time = 0) {
 animLoop();
 ```
 
-------------------------------------------------------
+---
+
 # Useful GLSL functions
 
 ```glsl
@@ -242,12 +269,14 @@ vec2 repeat(in vec2 p, in vec2 c) {
 }
 ```
 
-------------------------------------------------------
+---
+
 # Putting it all together
 
-* [DEMO](https://codepen.io/terabaud/pen/eqNjjY?editors=0010)
+- [DEMO](https://codepen.io/terabaud/pen/eqNjjY?editors=0010)
 
-------------------------------------------------------
+---
+
 # Thank you 👩‍💻
 
 ## Feedback and Questions
