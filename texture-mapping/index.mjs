@@ -46,6 +46,7 @@ function setup() {
   gl.clearColor(1 / 6, 1 / 6, 1 / 6, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
+  gl.enable(gl.CULL_FACE);
   window.addEventListener("resize", () => {
     glea.resize();
   });
